@@ -24,47 +24,44 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.rgbled');
+goog.provide('Blockly.Constants.Rgbled');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.rgbled.HUE = 215;
+Blockly.Constants.Rgbled.image = './media/rgbled.jpg';
 
-Blockly.Blocks.rgbled.image = filepath.media + '/rgbled.jpg';
-
-Blockly.Blocks.rgbled.checkBlocks = function(obj) {
-  var legal = null;
-  var current = obj.type;
-  var blocks = obj.workspace.getAllBlocks();
-  for (var i = 0; i < blocks.length; i++) {
-    if ((blocks[i].type == 'rgbled_setpixelcolor' ||
-        blocks[i].type == 'rgbled_custom_setpixelcolor' ||
-        blocks[i].type == 'rgbled_show' ||
-        blocks[i].type == 'rgbled_setpixelcolor2') &&
-        legal == null){
-        if (blocks[i].type != current)  legal = true;
-        else  legal = false;
+Blockly.Constants.Rgbled.checkBlocks = function (obj) {
+    var legal = null;
+    var current = obj.type;
+    var blocks = obj.workspace.getAllBlocks();
+    for (var i = 0; i < blocks.length; i++) {
+        if ((blocks[i].type == 'rgbled_setpixelcolor' ||
+                blocks[i].type == 'rgbled_custom_setpixelcolor' ||
+                blocks[i].type == 'rgbled_show' ||
+                blocks[i].type == 'rgbled_setpixelcolor2') &&
+            legal == null) {
+            if (blocks[i].type != current) legal = true;
+            else legal = false;
+        }
+        if (blocks[i].type == 'rgbled_begin') {
+            return true;
+        }
     }
-    if(blocks[i].type == 'rgbled_begin'){
-      return true;
-    }
-  }
-  return legal;
+    return legal;
 };
 
 Blockly.Blocks['rgbled_begin'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.RGBLED_BEGIN_HELPURL);
-        this.setColour(Blockly.Blocks.rgbled.HUE);
+        this.setColour(Blockly.Msg.RGBLED_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.rgbled.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Rgbled.image, 64, 64))
             .appendField(Blockly.Msg.RGBLED_BEGIN_SETTING)
             .appendField(Blockly.Msg.RGBLED_BEGIN_NUM)
-            .appendField(new Blockly.FieldTextInput("16"), "NUM");
-        this.appendDummyInput()
+            .appendField(new Blockly.FieldTextInput("16"), "NUM")
             .appendField(Blockly.Msg.RGBLED_BEGIN_PIN)
-            .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN");
-        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
             .appendField(Blockly.Msg.RGBLED_BEGIN_BRIGHTNESS)
             .appendField(new Blockly.FieldTextInput("50"), "BRIGHTNESS");
         this.setInputsInline(true);
@@ -72,7 +69,7 @@ Blockly.Blocks['rgbled_begin'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.RGBLED_BEGIN_TOOLTIP);
     },
-    onchange: function() {
+    onchange: function () {
         if (!this.workspace) {
             // Block has been deleted.
             return;
@@ -82,14 +79,13 @@ Blockly.Blocks['rgbled_begin'] = {
 };
 
 Blockly.Blocks['rgbled_setpixelcolor'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.RGBLED_SETPIXELCOLOR_HELPURL);
-        this.setColour(Blockly.Blocks.rgbled.HUE);
+        this.setColour(Blockly.Msg.RGBLED_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.rgbled.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Rgbled.image, 64, 64))
             .appendField(Blockly.Msg.RGBLED_SETPIXELCOLOR_TARGET)
-            .appendField(new Blockly.FieldTextInput("0"), "TARGET");
-        this.appendDummyInput()
+            .appendField(new Blockly.FieldTextInput("0"), "TARGET")
             .setAlign(Blockly.ALIGN_RIGHT)
             .appendField(Blockly.Msg.COLOR)
             .appendField(new Blockly.FieldColour("#00ff00"), "RGB");
@@ -98,28 +94,28 @@ Blockly.Blocks['rgbled_setpixelcolor'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.RGBLED_SETPIXELCOLOR_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Rgbled.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.RGBLED_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.rgbled.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.RGBLED_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
-}
+};
 
 Blockly.Blocks['rgbled_setpixelcolor2'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_HELPURL);
-        this.setColour(Blockly.Blocks.rgbled.HUE);
+        this.setColour(Blockly.Msg.RGBLED_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.rgbled.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Rgbled.image, 64, 64));
         this.appendValueInput("TARGET")
             .setCheck("Number")
-            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TARGET)
+            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TARGET);
         this.appendDummyInput()
             .setAlign(Blockly.ALIGN_RIGHT)
             .appendField(Blockly.Msg.COLOR)
@@ -129,76 +125,76 @@ Blockly.Blocks['rgbled_setpixelcolor2'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Rgbled.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.RGBLED_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.rgbled.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.RGBLED_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
-}
+};
 
 Blockly.Blocks['rgbled_custom_setpixelcolor'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_HELPURL);
-        this.setColour(Blockly.Blocks.rgbled.HUE);
+        this.setColour(Blockly.Msg.RGBLED_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.rgbled.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Rgbled.image, 64, 64));
         this.appendValueInput("TARGET")
             .setCheck("Number")
-            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TARGET)
+            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TARGET);
         this.appendValueInput("R")
             .setCheck("Number")
-            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_R)
+            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_R);
         this.appendValueInput("G")
             .setCheck("Number")
-            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_G)
+            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_G);
         this.appendValueInput("B")
             .setCheck("Number")
-            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_B)
+            .appendField(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_B);
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.RGBLED_CUSTOM_SETPIXELCOLOR_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Rgbled.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.RGBLED_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.rgbled.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.RGBLED_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
-}
+};
 
 Blockly.Blocks['rgbled_show'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.RGBLED_SHOW_HELPURL);
-        this.setColour(Blockly.Blocks.rgbled.HUE);
+        this.setColour(Blockly.Msg.RGBLED_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.rgbled.image, 64, 64))
-            .appendField(Blockly.Msg.RGBLED_SHOW)
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Rgbled.image, 64, 64))
+            .appendField(Blockly.Msg.RGBLED_SHOW);
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.RGBLED_SHOW_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Rgbled.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.RGBLED_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.rgbled.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.RGBLED_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
-}
+};

@@ -24,16 +24,15 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.initializes');
+goog.provide('Blockly.Constants.Initializes');
 
 goog.require('Blockly.Blocks');
-
-Blockly.Blocks.initializes.HUE = 0;
+goog.require('Blockly');
 
 Blockly.Blocks['initializes_setup'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.INITIALIZES_SETUP_HELPURL);
-    this.setColour(Blockly.Blocks.initializes.HUE);
+    this.setColour(Blockly.Msg.INITIALIZES_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.INITIALIZES_SETUP_APPENDTEXT);
     this.appendStatementInput("CONTENT");

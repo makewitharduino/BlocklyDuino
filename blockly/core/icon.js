@@ -27,6 +27,7 @@
 goog.provide('Blockly.Icon');
 
 goog.require('goog.dom');
+goog.require('goog.math.Coordinate');
 
 
 /**
@@ -39,9 +40,14 @@ Blockly.Icon = function(block) {
 };
 
 /**
- * Radius of icons.
+ * Does this icon get hidden when the block is collapsed.
  */
-Blockly.Icon.RADIUS = 8;
+Blockly.Icon.prototype.collapseHidden = true;
+
+/**
+ * Height and width of icons.
+ */
+Blockly.Icon.prototype.SIZE = 17;
 
 /**
  * Bubble UI (if visible).
@@ -51,32 +57,36 @@ Blockly.Icon.RADIUS = 8;
 Blockly.Icon.prototype.bubble_ = null;
 
 /**
- * Absolute X coordinate of icon's center.
+ * Absolute coordinate of icon's center.
+ * @type {goog.math.Coordinate}
  * @private
  */
-Blockly.Icon.prototype.iconX_ = 0;
-
-/**
- * Absolute Y coordinate of icon's centre.
- * @private
- */
-Blockly.Icon.prototype.iconY_ = 0;
+Blockly.Icon.prototype.iconXY_ = null;
 
 /**
  * Create the icon on the block.
- * @private
  */
-Blockly.Icon.prototype.createIcon_ = function() {
+Blockly.Icon.prototype.createIcon = function() {
   if (this.iconGroup_) {
     // Icon already exists.
     return;
   }
   /* Here's the markup that will be generated:
-  <g class="blocklyIconGroup"></g>
+  <g class="blocklyIconGroup">
+    ...
+  </g>
   */
-  this.iconGroup_ = Blockly.createSvgElement('g', {}, null);
+  this.iconGroup_ = Blockly.utils.createSvgElement('g',
+      {'class': 'blocklyIconGroup'}, null);
+  if (this.block_.isInFlyout) {
+    Blockly.utils.addClass(/** @type {!Element} */ (this.iconGroup_),
+                      'blocklyIconGroupReadonly');
+  }
+  this.drawIcon_(this.iconGroup_);
+
   this.block_.getSvgRoot().appendChild(this.iconGroup_);
-  Blockly.bindEvent_(this.iconGroup_, 'mouseup', this, this.iconClick_);
+  Blockly.bindEventWithChecks_(this.iconGroup_, 'mouseup', this,
+      this.iconClick_);
   this.updateEditable();
 };
 
@@ -96,13 +106,6 @@ Blockly.Icon.prototype.dispose = function() {
  * Add or remove the UI indicating if this icon may be clicked or not.
  */
 Blockly.Icon.prototype.updateEditable = function() {
-  if (!this.block_.isInFlyout) {
-    Blockly.addClass_(/** @type {!Element} */ (this.iconGroup_),
-                      'blocklyIconGroup');
-  } else {
-    Blockly.removeClass_(/** @type {!Element} */ (this.iconGroup_),
-                         'blocklyIconGroup');
-  }
 };
 
 /**
@@ -119,7 +122,11 @@ Blockly.Icon.prototype.isVisible = function() {
  * @private
  */
 Blockly.Icon.prototype.iconClick_ = function(e) {
-  if (!this.block_.isInFlyout) {
+  if (this.block_.workspace.isDragging()) {
+    // Drag operation is concluding.  Don't open the editor.
+    return;
+  }
+  if (!this.block_.isInFlyout && !Blockly.utils.isRightButton(e)) {
     this.setVisible(!this.isVisible());
   }
 };
@@ -129,8 +136,7 @@ Blockly.Icon.prototype.iconClick_ = function(e) {
  */
 Blockly.Icon.prototype.updateColour = function() {
   if (this.isVisible()) {
-    var hexColour = Blockly.makeColour(this.block_.getColour());
-    this.bubble_.setColour(hexColour);
+    this.bubble_.setColour(this.block_.getColour());
   }
 };
 
@@ -140,38 +146,36 @@ Blockly.Icon.prototype.updateColour = function() {
  * @return {number} Horizontal offset for next item to draw.
  */
 Blockly.Icon.prototype.renderIcon = function(cursorX) {
-  if (this.block_.isCollapsed()) {
+  if (this.collapseHidden && this.block_.isCollapsed()) {
     this.iconGroup_.setAttribute('display', 'none');
     return cursorX;
   }
   this.iconGroup_.setAttribute('display', 'block');
 
   var TOP_MARGIN = 5;
-  var diameter = 2 * Blockly.Icon.RADIUS;
-  if (Blockly.RTL) {
-    cursorX -= diameter;
+  var width = this.SIZE;
+  if (this.block_.RTL) {
+    cursorX -= width;
   }
   this.iconGroup_.setAttribute('transform',
-      'translate(' + cursorX + ', ' + TOP_MARGIN + ')');
+      'translate(' + cursorX + ',' + TOP_MARGIN + ')');
   this.computeIconLocation();
-  if (Blockly.RTL) {
+  if (this.block_.RTL) {
     cursorX -= Blockly.BlockSvg.SEP_SPACE_X;
   } else {
-    cursorX += diameter + Blockly.BlockSvg.SEP_SPACE_X;
+    cursorX += width + Blockly.BlockSvg.SEP_SPACE_X;
   }
   return cursorX;
 };
 
 /**
  * Notification that the icon has moved.  Update the arrow accordingly.
- * @param {number} x Absolute horizontal location.
- * @param {number} y Absolute vertical location.
+ * @param {!goog.math.Coordinate} xy Absolute location in workspace coordinates.
  */
-Blockly.Icon.prototype.setIconLocation = function(x, y) {
-  this.iconX_ = x;
-  this.iconY_ = y;
+Blockly.Icon.prototype.setIconLocation = function(xy) {
+  this.iconXY_ = xy;
   if (this.isVisible()) {
-    this.bubble_.setAnchorLocation(x, y);
+    this.bubble_.setAnchorLocation(xy);
   }
 };
 
@@ -182,18 +186,20 @@ Blockly.Icon.prototype.setIconLocation = function(x, y) {
 Blockly.Icon.prototype.computeIconLocation = function() {
   // Find coordinates for the centre of the icon and update the arrow.
   var blockXY = this.block_.getRelativeToSurfaceXY();
-  var iconXY = Blockly.getRelativeXY_(this.iconGroup_);
-  var newX = blockXY.x + iconXY.x + Blockly.Icon.RADIUS;
-  var newY = blockXY.y + iconXY.y + Blockly.Icon.RADIUS;
-  if (newX !== this.iconX_ || newY !== this.iconY_) {
-    this.setIconLocation(newX, newY);
+  var iconXY = Blockly.utils.getRelativeXY(this.iconGroup_);
+  var newXY = new goog.math.Coordinate(
+      blockXY.x + iconXY.x + this.SIZE / 2,
+      blockXY.y + iconXY.y + this.SIZE / 2);
+  if (!goog.math.Coordinate.equals(this.getIconLocation(), newXY)) {
+    this.setIconLocation(newXY);
   }
 };
 
 /**
  * Returns the center of the block's icon relative to the surface.
- * @return {!Object} Object with x and y properties.
+ * @return {!goog.math.Coordinate} Object with x and y properties in workspace
+ *     coordinates.
  */
 Blockly.Icon.prototype.getIconLocation = function() {
-  return {x: this.iconX_, y: this.iconY_};
+  return this.iconXY_;
 };

@@ -24,20 +24,19 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.servo');
+goog.provide('Blockly.Constants.Servo');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.servo.HUE = 215;
-
-Blockly.Blocks.servo.image = filepath.media+'/servo.jpg';
+Blockly.Constants.Servo.image = './media/servo.jpg';
 
 Blockly.Blocks['servo_attach'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_ATTACH_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_ATTACH_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_ATTACH_TEXT2);
@@ -51,9 +50,9 @@ Blockly.Blocks['servo_attach'] = {
 Blockly.Blocks['servo_custom_attach'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_ATTACH_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_ATTACH_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_ATTACH_TEXT2);
@@ -75,9 +74,9 @@ Blockly.Blocks['servo_custom_attach'] = {
 Blockly.Blocks['servo_write'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_WRITE_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_WRITE_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_WRITE_TEXT2);
@@ -96,9 +95,9 @@ Blockly.Blocks['servo_write'] = {
 Blockly.Blocks['servo_writeus'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_WRITE_US_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_WRITE_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_WRITE_TEXT2);
@@ -117,9 +116,9 @@ Blockly.Blocks['servo_writeus'] = {
 Blockly.Blocks['servo_read'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_READ_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_READ_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_READ_TEXT2);
@@ -132,9 +131,9 @@ Blockly.Blocks['servo_read'] = {
 Blockly.Blocks['servo_attached'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_ATTACHED_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_ATTACHED_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_ATTACHED_TEXT2);
@@ -147,9 +146,9 @@ Blockly.Blocks['servo_attached'] = {
 Blockly.Blocks['servo_detach'] = {
   init: function () {
     this.setHelpUrl(Blockly.Msg.SERVO_DETACH_HELPURL);
-    this.setColour(Blockly.Blocks.servo.HUE);
+    this.setColour(Blockly.Msg.SERVO_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.servo.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Servo.image, 64, 64))
       .appendField(Blockly.Msg.SERVO_DETACH_TEXT1)
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN")
       .appendField(Blockly.Msg.SERVO_DETACH_TEXT2);

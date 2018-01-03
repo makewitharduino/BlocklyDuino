@@ -24,20 +24,15 @@
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.ethernet');
+goog.provide('Blockly.Constants.Ethernet');
 
 goog.require('Blockly.Blocks');
-
-Blockly.Blocks.ethernet.HUE = 225;
-
-Blockly.Blocks.ethernet.image = filepath.media+'/ethernet.jpg';
+goog.require('Blockly');
 
 Blockly.Blocks['ethernet_begin_dhcp'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_BEGIN_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_BEGIN_DHCP_TITLE)
       .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""],[Blockly.Msg.ETHERNET_VERSION_2,"2"]]), 'VERSION');
@@ -53,7 +48,7 @@ Blockly.Blocks['ethernet_begin_dhcp'] = {
 Blockly.Blocks['ethernet_mac_address'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_BEGIN_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(new Blockly.FieldTextInput("DE"),"MAC_ADDRESS_1")
       .appendField('-')
@@ -76,7 +71,7 @@ Blockly.Blocks['ethernet_mac_address'] = {
 Blockly.Blocks['ethernet_client_begin'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_BEGIN_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""],[Blockly.Msg.ETHERNET_VERSION_2,"2"]]), 'VERSION')
       .appendField(Blockly.Msg.ETHERNET_BEGIN_TITLE);
@@ -99,7 +94,7 @@ Blockly.Blocks['ethernet_client_begin'] = {
 Blockly.Blocks['ethernet_localip'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_LOCALIP_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_LOCALIP_TITLE);
     this.setOutput(true, 'String');
@@ -110,7 +105,7 @@ Blockly.Blocks['ethernet_localip'] = {
 Blockly.Blocks['ethernet_available'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_AVAILABLE_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_AVAILABLE_TITLE);
     this.setOutput(true, 'Number');
@@ -121,7 +116,7 @@ Blockly.Blocks['ethernet_available'] = {
 Blockly.Blocks['ethernet_connected'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_CONNECTED_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_CONNECTED_TITLE);
     this.setOutput(true, 'Boolean');
@@ -132,7 +127,7 @@ Blockly.Blocks['ethernet_connected'] = {
 Blockly.Blocks['ethernet_connect'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_CONNECT_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_CONNECT_TITLE);
     this.appendValueInput("SERVER")
@@ -150,7 +145,7 @@ Blockly.Blocks['ethernet_connect'] = {
 Blockly.Blocks['ethernet_print'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_CLIENT_PRINT_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_CLIENT_PRINT_TITLE);
     this.appendValueInput("TEXT")
@@ -166,7 +161,7 @@ Blockly.Blocks['ethernet_print'] = {
 Blockly.Blocks['ethernet_println'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_CLIENT_PRINTLN_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_CLIENT_PRINTLN_TITLE);
     this.appendValueInput("TEXT")
@@ -182,7 +177,7 @@ Blockly.Blocks['ethernet_println'] = {
 Blockly.Blocks['ethernet_stop'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_STOP_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_STOP_TITLE);
     this.setPreviousStatement(true, null);
@@ -194,7 +189,7 @@ Blockly.Blocks['ethernet_stop'] = {
 Blockly.Blocks['ethernet_read'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_READ_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_READ_TITLE);
     this.setOutput(true, 'String');
@@ -205,7 +200,7 @@ Blockly.Blocks['ethernet_read'] = {
 Blockly.Blocks['ethernet_get_request'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_GET_REQUEST_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_GET_REQUEST_TITLE);
     this.appendValueInput("URL")
@@ -225,7 +220,7 @@ Blockly.Blocks['ethernet_get_request'] = {
 Blockly.Blocks['ethernet_post_request'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ETHERNET_POST_REQUEST_HELPURL);
-    this.setColour(Blockly.Blocks.ethernet.HUE);
+    this.setColour(Blockly.Msg.ETHERNET_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ETHERNET_POST_REQUEST_TITLE);
     this.appendValueInput("URL")

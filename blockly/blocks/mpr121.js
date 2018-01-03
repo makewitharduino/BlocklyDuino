@@ -19,36 +19,31 @@
  */
 
 /**
- * @fileoverview Helper functions for generating Arduino blocks.
- * @author gasolin@gmail.com (Fred Lin)
+ * @author okhiroyuki@gmail.com
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.mpr121');
+goog.provide('Blockly.Constants.Mpr121');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.mpr121.HUE = 215;
+Blockly.Constants.Mpr121.image = './media/mpr121.jpg';
 
-Blockly.Blocks.mpr121.image = filepath.media+'/mpr121.jpg';
-
-Blockly.Blocks.mpr121.checkBlocks = function(obj) {
+Blockly.Constants.Mpr121.checkBlocks = function (obj) {
   var legal = null;
   var current = obj.type;
   var blocks = obj.workspace.getAllBlocks();
   for (var i = 0; i < blocks.length; i++) {
     if ((blocks[i].type == 'mpr121_touched' ||
-         blocks[i].type == 'mpr121_released' ||
-         blocks[i].type == 'mpr121_value' ||
-         blocks[i].type == 'mpr121_reset') &&
-         legal == null){
-      if (blocks[i].type != current)  legal = true;
-      else  legal = false;
+        blocks[i].type == 'mpr121_released' ||
+        blocks[i].type == 'mpr121_value' ||
+        blocks[i].type == 'mpr121_reset') &&
+      legal == null) {
+      if (blocks[i].type != current) legal = true;
+      else legal = false;
     }
-    //find i2c_sevenseg_begin block
-    if(blocks[i].type == 'mpr121_begin'){
+    if (blocks[i].type == 'mpr121_begin') {
       return true;
     }
   }
@@ -56,17 +51,17 @@ Blockly.Blocks.mpr121.checkBlocks = function(obj) {
 };
 
 Blockly.Blocks['mpr121_begin'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.MPR121_HELPURL);
-    this.setColour(Blockly.Blocks.mpr121.HUE);
+    this.setColour(Blockly.Msg.MPR121_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.mpr121.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Mpr121.image, 64, 64))
       .appendField(Blockly.Msg.MPR121_BEGIN_TITLE);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.MPR121_BEGIN_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
@@ -77,25 +72,25 @@ Blockly.Blocks['mpr121_begin'] = {
 
 
 Blockly.Blocks['mpr121_touched'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.MPR121_HELPURL);
-    this.setColour(Blockly.Blocks.mpr121.HUE);
+    this.setColour(Blockly.Msg.MPR121_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.mpr121.image, 64, 64));
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Mpr121.image, 64, 64));
     this.appendValueInput("CH")
       .setCheck("Number");
     this.appendDummyInput()
-      .appendField(Blockly.Msg.MPR121_TOUCHED_TITLE);    
+      .appendField(Blockly.Msg.MPR121_TOUCHED_TITLE);
     this.setInputsInline(true);
     this.setOutput(true, 'Boolean');
     this.setTooltip(Blockly.Msg.MPR121_TOUCHED_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.mpr121.checkBlocks(this)) {
+    if (!Blockly.Constants.Mpr121.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.MPR121_WARNING);
     } else {
       this.setWarningText(null);
@@ -104,11 +99,11 @@ Blockly.Blocks['mpr121_touched'] = {
 };
 
 Blockly.Blocks['mpr121_released'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.MPR121_HELPURL);
-    this.setColour(Blockly.Blocks.mpr121.HUE);
+    this.setColour(Blockly.Msg.MPR121_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.mpr121.image, 64, 64));
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Mpr121.image, 64, 64));
     this.appendValueInput("CH")
       .setCheck("Number");
     this.appendDummyInput()
@@ -117,12 +112,12 @@ Blockly.Blocks['mpr121_released'] = {
     this.setOutput(true, 'Boolean');
     this.setTooltip(Blockly.Msg.MPR121_RELEASED_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.mpr121.checkBlocks(this)) {
+    if (!Blockly.Constants.Mpr121.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.MPR121_WARNING);
     } else {
       this.setWarningText(null);
@@ -132,26 +127,25 @@ Blockly.Blocks['mpr121_released'] = {
 
 
 Blockly.Blocks['mpr121_value'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.MPR121_HELPURL);
-    this.setColour(Blockly.Blocks.mpr121.HUE);
+    this.setColour(Blockly.Msg.MPR121_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.mpr121.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Mpr121.image, 64, 64))
       .appendField(Blockly.Msg.MPR121_VALUE_TITLE);
     this.appendValueInput("CH")
       .setCheck("Number")
       .appendField(Blockly.Msg.MPR121_POSITION);
-    this.appendDummyInput()
     this.setInputsInline(true);
     this.setOutput(true, 'Number');
     this.setTooltip(Blockly.Msg.MPR121_VALUE_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.mpr121.checkBlocks(this)) {
+    if (!Blockly.Constants.Mpr121.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.MPR121_WARNING);
     } else {
       this.setWarningText(null);
@@ -160,26 +154,25 @@ Blockly.Blocks['mpr121_value'] = {
 };
 
 Blockly.Blocks['mpr121_reset'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.MPR121_HELPURL);
-    this.setColour(Blockly.Blocks.mpr121.HUE);
+    this.setColour(Blockly.Msg.MPR121_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.mpr121.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Mpr121.image, 64, 64))
       .appendField(Blockly.Msg.MPR121_RESET_TITLE);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.MPR121_RESET_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.mpr121.checkBlocks(this)) {
+    if (!Blockly.Constants.Mpr121.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.MPR121_WARNING);
     } else {
       this.setWarningText(null);
     }
   }
 };
-

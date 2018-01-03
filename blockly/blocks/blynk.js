@@ -19,30 +19,28 @@
  */
 
 /**
- * @fileoverview Helper functions for generating Arduino blocks.
  * @author ok.okada.hiroyuki@gmail.com (hiroyuki okada)
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.blynk');
+goog.provide('Blockly.Constants.Blynk');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.blynk.HUE = 65;
-
-Blockly.Blocks.blynk.image = filepath.media+'/blynk.png';
+Blockly.Constants.Blynk.image = './media/blynk.png';
 
 Blockly.Blocks['blynk_ethernet_begin'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_ETHERNET_BEGIN_TITLE)
-    //      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""],[Blockly.Msg.ETHERNET_VERSION_2,"2"]]), 'VERSION')
-      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""]], 'VERSION'));
+      //      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""],[Blockly.Msg.ETHERNET_VERSION_2,"2"]]), 'VERSION')
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.ETHERNET_VERSION_1, ""]
+      ], 'VERSION'));
     this.appendValueInput("AUTH")
       .setCheck("String")
       .setAlign(Blockly.ALIGN_RIGHT)
@@ -58,15 +56,15 @@ Blockly.Blocks['blynk_ethernet_begin'] = {
 };
 
 Blockly.Blocks['blynk_write'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_WRITE_TITLE);
     this.appendDummyInput()
       .appendField("V")
-      .appendField(new Blockly.FieldTextInput("0"),"PIN");
+      .appendField(new Blockly.FieldTextInput("0"), "PIN");
     this.appendStatementInput("ACTION")
       .setCheck(null);
     this.setInputsInline(true);
@@ -77,48 +75,56 @@ Blockly.Blocks['blynk_write'] = {
 };
 
 Blockly.Blocks['blynk_param'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_PARAM_TITLE)
       .appendField(Blockly.Msg.DATA_TYPE)
-      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.INTEGER,"asInt"],[Blockly.Msg.DOUBLE,"asDouble"],[Blockly.Msg.STRING,"asStr"]]), 'TYPE');
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.INTEGER, "asInt"],
+        [Blockly.Msg.DOUBLE, "asDouble"],
+        [Blockly.Msg.STRING, "asStr"]
+      ]), 'TYPE');
     this.setInputsInline(true);
-    this.setOutput(true,["Number","Boolean"]);
+    this.setOutput(true, ["Number", "Boolean"]);
     this.setTooltip(Blockly.Msg.BLYNK_PARAM_TOOLTIP);
   }
 };
 
 Blockly.Blocks['blynk_merge_param'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_MERGE_PARAM_TITLE)
       .appendField(Blockly.Msg.INDEX)
       .appendField(new Blockly.FieldDropdown(profile.default.blynk_merge_index), "INDEX")
       .appendField(Blockly.Msg.DATA_TYPE)
-      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.INTEGER,"asInt"],[Blockly.Msg.DOUBLE,"asDouble"],[Blockly.Msg.STRING,"asStr"]]), 'TYPE');
-    this.setOutput(true,["Number","Boolean"]);
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.INTEGER, "asInt"],
+        [Blockly.Msg.DOUBLE, "asDouble"],
+        [Blockly.Msg.STRING, "asStr"]
+      ]), 'TYPE');
+    this.setOutput(true, ["Number", "Boolean"]);
     this.setTooltip(Blockly.Msg.BLYNK_MERGE_PARAM_TOOLTIP);
   }
 };
 
 Blockly.Blocks['blynk_virtual_write'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_VIRTUAL_WRITE_TITLE);
     this.appendDummyInput()
       .appendField("V")
-      .appendField(new Blockly.FieldTextInput("0"),"PIN");
+      .appendField(new Blockly.FieldTextInput("0"), "PIN");
     this.appendValueInput("VALUE")
-      .setCheck("Number","Boolean")
+      .setCheck("Number", "Boolean")
       .setAlign(Blockly.ALIGN_RIGHT)
       .appendField(Blockly.Msg.VALUE);
     this.setInputsInline(true);
@@ -129,11 +135,11 @@ Blockly.Blocks['blynk_virtual_write'] = {
 };
 
 Blockly.Blocks['blynk_email'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_EMAIL_TITLE);
     this.appendValueInput("ADDRESS")
       .setCheck("String")
@@ -154,11 +160,11 @@ Blockly.Blocks['blynk_email'] = {
 };
 
 Blockly.Blocks['blynk_notify'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_NOTIFY_TITLE);
     this.appendValueInput("TEXT")
       .setCheck("String")
@@ -171,11 +177,11 @@ Blockly.Blocks['blynk_notify'] = {
 };
 
 Blockly.Blocks['blynk_tweet'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_TWEET_TITLE);
     this.appendValueInput("TEXT")
       .setCheck("String")
@@ -188,11 +194,11 @@ Blockly.Blocks['blynk_tweet'] = {
 };
 
 Blockly.Blocks['blynk_connect'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.BLYNK_HELPURL);
-    this.setColour(Blockly.Blocks.blynk.HUE);
+    this.setColour(Blockly.Msg.BLYNK_HUEE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.blynk.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Blynk.image, 64, 64))
       .appendField(Blockly.Msg.BLYNK_CONNECT_TITLE);
     this.setOutput(true);
     this.setTooltip(Blockly.Msg.BLYNK_CONNECT_TOOLTIP);

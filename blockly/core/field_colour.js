@@ -27,16 +27,18 @@
 goog.provide('Blockly.FieldColour');
 
 goog.require('Blockly.Field');
+goog.require('Blockly.utils');
+
 goog.require('goog.dom');
 goog.require('goog.events');
-goog.require('goog.ui.ColorPicker');
 goog.require('goog.style');
+goog.require('goog.ui.ColorPicker');
 
 
 /**
  * Class for a colour input field.
  * @param {string} colour The initial colour in '#rrggbb' format.
- * @param {Function} opt_changeHandler A function that is executed when a new
+ * @param {Function=} opt_validator A function that is executed when a new
  *     colour is selected.  Its sole argument is the new colour value.  Its
  *     return value becomes the selected colour, unless it is undefined, in
  *     which case the new colour stands, or it is null, in which case the change
@@ -44,32 +46,33 @@ goog.require('goog.style');
  * @extends {Blockly.Field}
  * @constructor
  */
-Blockly.FieldColour = function(colour, opt_changeHandler) {
-  Blockly.FieldColour.superClass_.constructor.call(this, '\u00A0\u00A0\u00A0');
-
-  this.changeHandler_ = opt_changeHandler;
-  // Set the initial state.
-  this.setValue(colour);
+Blockly.FieldColour = function(colour, opt_validator) {
+  Blockly.FieldColour.superClass_.constructor.call(this, colour, opt_validator);
+  this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP);
 };
 goog.inherits(Blockly.FieldColour, Blockly.Field);
 
 /**
- * Install this field on a block.
- * @param {!Blockly.Block} block The block containing this field.
+ * By default use the global constants for colours.
+ * @type {Array.<string>}
+ * @private
  */
-Blockly.FieldColour.prototype.init = function(block) {
-  Blockly.FieldColour.superClass_.init.call(this, block);
-  this.borderRect_.style['fillOpacity'] = 1;
-  this.setValue(this.getValue());
-};
+Blockly.FieldColour.prototype.colours_ = null;
 
 /**
- * Clone this FieldColour.
- * @return {!Blockly.FieldColour} The result of calling the constructor again
- *   with the current values of the arguments used during construction.
+ * By default use the global constants for columns.
+ * @type {number}
+ * @private
  */
-Blockly.FieldColour.prototype.clone = function() {
-  return new Blockly.FieldColour(this.getValue(), this.changeHandler_);
+Blockly.FieldColour.prototype.columns_ = 0;
+
+/**
+ * Install this field on a block.
+ */
+Blockly.FieldColour.prototype.init = function() {
+  Blockly.FieldColour.superClass_.init.call(this);
+  this.borderRect_.style['fillOpacity'] = 1;
+  this.setValue(this.getValue());
 };
 
 /**
@@ -98,15 +101,14 @@ Blockly.FieldColour.prototype.getValue = function() {
  * @param {string} colour The new colour in '#rrggbb' format.
  */
 Blockly.FieldColour.prototype.setValue = function(colour) {
+  if (this.sourceBlock_ && Blockly.Events.isEnabled() &&
+      this.colour_ != colour) {
+    Blockly.Events.fire(new Blockly.Events.BlockChange(
+        this.sourceBlock_, 'field', this.name, this.colour_, colour));
+  }
   this.colour_ = colour;
   if (this.borderRect_) {
     this.borderRect_.style.fill = colour;
-  }
-  if (this.sourceBlock_ && this.sourceBlock_.rendered) {
-    // Since we're not re-rendering we need to explicitly call
-    // Blockly.Realtime.blockChanged()
-    Blockly.Realtime.blockChanged(this.sourceBlock_);
-    this.sourceBlock_.workspace.fireChangeEvent();
   }
 };
 
@@ -116,6 +118,7 @@ Blockly.FieldColour.prototype.setValue = function(colour) {
  */
 Blockly.FieldColour.prototype.getText = function() {
   var colour = this.colour_;
+  // Try to use #rgb format if possible, rather than #rrggbb.
   var m = colour.match(/^#(.)\1(.)\2(.)\3$/);
   if (m) {
     colour = '#' + m[1] + m[2] + m[3];
@@ -137,49 +140,46 @@ Blockly.FieldColour.COLOURS = goog.ui.ColorPicker.SIMPLE_GRID_COLORS;
 Blockly.FieldColour.COLUMNS = 7;
 
 /**
+ * Set a custom colour grid for this field.
+ * @param {Array.<string>} colours Array of colours for this block,
+ *     or null to use default (Blockly.FieldColour.COLOURS).
+ * @return {!Blockly.FieldColour} Returns itself (for method chaining).
+ */
+Blockly.FieldColour.prototype.setColours = function(colours) {
+  this.colours_ = colours;
+  return this;
+};
+
+/**
+ * Set a custom grid size for this field.
+ * @param {number} columns Number of columns for this block,
+ *     or 0 to use default (Blockly.FieldColour.COLUMNS).
+ * @return {!Blockly.FieldColour} Returns itself (for method chaining).
+ */
+Blockly.FieldColour.prototype.setColumns = function(columns) {
+  this.columns_ = columns;
+  return this;
+};
+
+/**
  * Create a palette under the colour field.
  * @private
  */
 Blockly.FieldColour.prototype.showEditor_ = function() {
-  Blockly.WidgetDiv.show(this, Blockly.FieldColour.widgetDispose_);
-  // Create the palette using Closure.
-  var picker = new goog.ui.ColorPicker();
-  picker.setSize(Blockly.FieldColour.COLUMNS);
-  picker.setColors(Blockly.FieldColour.COLOURS);
+  Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL,
+      Blockly.FieldColour.widgetDispose_);
 
-  // Position the palette to line up with the field.
-  // Record windowSize and scrollOffset before adding the palette.
-  var windowSize = goog.dom.getViewportSize();
-  var scrollOffset = goog.style.getViewportPageOffset(document);
-  var xy = Blockly.getAbsoluteXY_(/** @type {!Element} */ (this.borderRect_));
-  var borderBBox = this.borderRect_.getBBox();
-  var div = Blockly.WidgetDiv.DIV;
-  picker.render(div);
-  picker.setSelectedColor(this.getValue());
-  // Record paletteSize after adding the palette.
+  // Record viewport dimensions before adding the widget.
+  var viewportBBox = Blockly.utils.getViewportBBox();
+  var anchorBBox = this.getScaledBBox_();
+
+  // Create and add the colour picker, then record the size.
+  var picker = this.createWidget_();
   var paletteSize = goog.style.getSize(picker.getElement());
 
-  // Flip the palette vertically if off the bottom.
-  if (xy.y + paletteSize.height + borderBBox.height >=
-      windowSize.height + scrollOffset.y) {
-    xy.y -= paletteSize.height - 1;
-  } else {
-    xy.y += borderBBox.height - 1;
-  }
-  if (Blockly.RTL) {
-    xy.x += borderBBox.width;
-    xy.x -= paletteSize.width;
-    // Don't go offscreen left.
-    if (xy.x < scrollOffset.x) {
-      xy.x = scrollOffset.x;
-    }
-  } else {
-    // Don't go offscreen right.
-    if (xy.x > windowSize.width + scrollOffset.x - paletteSize.width) {
-      xy.x = windowSize.width + scrollOffset.x - paletteSize.width;
-    }
-  }
-  Blockly.WidgetDiv.position(xy.x, xy.y, windowSize, scrollOffset);
+  // Position the picker to line up with the field.
+  Blockly.WidgetDiv.positionWithAnchor(viewportBBox, anchorBBox, paletteSize,
+      this.sourceBlock_.RTL);
 
   // Configure event handler.
   var thisField = this;
@@ -188,17 +188,30 @@ Blockly.FieldColour.prototype.showEditor_ = function() {
       function(event) {
         var colour = event.target.getSelectedColor() || '#000000';
         Blockly.WidgetDiv.hide();
-        if (thisField.sourceBlock_ && thisField.changeHandler_) {
-          // Call any change handler, and allow it to override.
-          var override = thisField.changeHandler_(colour);
-          if (override !== undefined) {
-            colour = override;
-          }
+        if (thisField.sourceBlock_) {
+          // Call any validation function, and allow it to override.
+          colour = thisField.callValidator(colour);
         }
         if (colour !== null) {
           thisField.setValue(colour);
         }
       });
+};
+
+/**
+ * Create a color picker widget and render it inside the widget div.
+ * @return {!goog.ui.ColorPicker} The newly created color picker.
+ * @private
+ */
+Blockly.FieldColour.prototype.createWidget_ = function() {
+  // Create the palette using Closure.
+  var picker = new goog.ui.ColorPicker();
+  picker.setSize(this.columns_ || Blockly.FieldColour.COLUMNS);
+  picker.setColors(this.colours_ || Blockly.FieldColour.COLOURS);
+  var div = Blockly.WidgetDiv.DIV;
+  picker.render(div);
+  picker.setSelectedColor(this.getValue());
+  return picker;
 };
 
 /**
@@ -209,4 +222,5 @@ Blockly.FieldColour.widgetDispose_ = function() {
   if (Blockly.FieldColour.changeEventKey_) {
     goog.events.unlistenByKey(Blockly.FieldColour.changeEventKey_);
   }
+  Blockly.Events.setGroup(false);
 };

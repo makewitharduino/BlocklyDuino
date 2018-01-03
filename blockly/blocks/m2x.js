@@ -24,22 +24,19 @@
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.m2x');
+goog.provide('Blockly.Constants.M2x');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.m2x.HUE = 65;
-
-Blockly.Blocks.m2x.image = filepath.media+'/m2x.png';
+Blockly.Constants.M2x.image = './media/m2x.png';
 
 Blockly.Blocks['m2x_begin'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_BEGIN_TITLE)
       .appendField(new Blockly.FieldDropdown([[Blockly.Msg.ETHERNET_VERSION_1,""],[Blockly.Msg.ETHERNET_VERSION_2,"2"]]), 'VERSION')
     this.appendValueInput("ID")
@@ -63,9 +60,9 @@ Blockly.Blocks['m2x_begin'] = {
 Blockly.Blocks['m2x_update_value'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_UPDATE_VALUE_TITLE);
     this.appendValueInput('VALUE')
       .setCheck('Number')
@@ -79,9 +76,9 @@ Blockly.Blocks['m2x_update_value'] = {
 Blockly.Blocks['m2x_list_value'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_LIST_VALUE_TITLE);
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
@@ -93,9 +90,9 @@ Blockly.Blocks['m2x_list_value'] = {
 Blockly.Blocks['m2x_custom_list_value'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_LIST_VALUE_TITLE);
     this.appendDummyInput()
       .setAlign(Blockly.ALIGN_RIGHT)
@@ -124,9 +121,9 @@ Blockly.Blocks['m2x_custom_list_value'] = {
 Blockly.Blocks['m2x_delete_values'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_DELETE_VALUES_TITLE);
     this.appendDummyInput()
       .setAlign(Blockly.ALIGN_RIGHT)
@@ -154,9 +151,9 @@ Blockly.Blocks['m2x_delete_values'] = {
 Blockly.Blocks['m2x_update_location'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_UPDATE_LOCATION_TITLE);
     this.appendValueInput('LOCATION_NAME')
       .setCheck('String')
@@ -182,9 +179,9 @@ Blockly.Blocks['m2x_update_location'] = {
 Blockly.Blocks['m2x_read_location'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.M2X_HELPURL);
-    this.setColour(Blockly.Blocks.m2x.HUE);
+    this.setColour(Blockly.Msg.M2X_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.m2x.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.M2x.image, 64, 64))
       .appendField(Blockly.Msg.M2X_READ_LOCATION_TITLE);
     this.setInputsInline(true);
     this.setOutput(true, 'Number');

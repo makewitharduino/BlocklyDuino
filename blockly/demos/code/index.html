@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="google" value="notranslate">
+  <title>Blockly Demo:</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/storage.js"></script>
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../blocks_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="../../python_compressed.js"></script>
+  <script src="../../php_compressed.js"></script>
+  <script src="../../lua_compressed.js"></script>
+  <script src="../../dart_compressed.js"></script>
+  <script src="../../arduino_compressed.js"></script>
+  <script src="code.js"></script>
+</head>
+
+<body>
+  <table width="100%" height="100%">
+    <tr>
+      <td>
+        <h1>
+          <a href="https://developers.google.com/blockly/">Blockly</a>&rlm; &gt;
+          <a href="../index.html">Demos</a>&rlm; &gt;
+          <span id="title">...</span>
+        </h1>
+      </td>
+      <td class="farSide">
+        <select id="languageMenu"></select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan=2>
+        <table width="100%">
+          <tr id="tabRow" height="1em">
+            <td id="tab_blocks" class="tabon">...</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_javascript" class="taboff">JavaScript</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_python" class="taboff">Python</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_php" class="taboff">PHP</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_lua" class="taboff">Lua</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_dart" class="taboff">Dart</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_arduino" class="taboff">Arduino</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_xml" class="taboff">XML</td>
+            <td class="tabmax">
+              <button id="trashButton" class="notext" title="...">
+                <img src='../../media/1x1.gif' class="trash icon21">
+              </button>
+              <button id="linkButton" class="notext" title="...">
+                <img src='../../media/1x1.gif' class="link icon21">
+              </button>
+              <button id="runButton" class="notext primary" title="...">
+                <img src='../../media/1x1.gif' class="run icon21">
+              </button>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="99%" colspan=2 id="content_area">
+      </td>
+    </tr>
+  </table>
+  <div id="content_blocks" class="content"></div>
+  <pre id="content_javascript" class="content"></pre>
+  <pre id="content_python" class="content"></pre>
+  <pre id="content_php" class="content"></pre>
+  <pre id="content_lua" class="content"></pre>
+  <pre id="content_dart" class="content"></pre>
+  <pre id="content_arduino" class="content"></pre>
+  <textarea id="content_xml" class="content" wrap="off"></textarea>
+
+  <xml id="toolbox" style="display: none">
+    <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+      <block type="logic_null"></block>
+      <block type="logic_ternary"></block>
+    </category>
+    <category name="%{BKY_CATLOOPS}" colour="%{BKY_LOOPS_HUE}">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_whileUntil"></block>
+      <block type="controls_for">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+        <value name="BY">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="controls_forEach"></block>
+      <block type="controls_flow_statements"></block>
+    </category>
+    <category name="%{BKY_CATMATH}" colour="%{BKY_MATH_HUE}">
+      <block type="math_number"></block>
+      <block type="math_arithmetic">
+        <value name="A">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_single">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">9</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_trig">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">45</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constant"></block>
+      <block type="math_number_property">
+        <value name="NUMBER_TO_CHECK">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_round">
+        <value name="NUM">
+          <shadow type="math_number">
+            <field name="NUM">3.1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_on_list"></block>
+      <block type="math_modulo">
+        <value name="DIVIDEND">
+          <shadow type="math_number">
+            <field name="NUM">64</field>
+          </shadow>
+        </value>
+        <value name="DIVISOR">
+          <shadow type="math_number">
+            <field name="NUM">10</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_constrain">
+        <value name="VALUE">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="LOW">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="HIGH">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_int">
+        <value name="FROM">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+        <value name="TO">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_random_float"></block>
+    </category>
+    <category name="%{BKY_CATTEXT}" colour="%{BKY_TEXTS_HUE}">
+      <block type="text"></block>
+      <block type="text_join"></block>
+      <block type="text_append">
+        <value name="TEXT">
+          <shadow type="text"></shadow>
+        </value>
+      </block>
+      <block type="text_length">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_isEmpty">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+        <value name="FIND">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_getSubstring">
+        <value name="STRING">
+          <block type="variables_get">
+            <field name="VAR">{textVariable}</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_trim">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_print">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_prompt_ext">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATVARIABLES}" colour="%{BKY_VARIABLES_HUE}" custom="VARIABLE"></category>
+    <category name="%{BKY_CATFUNCTIONS}" colour="%{BKY_PROCEDURES_HUE}" custom="PROCEDURE"></category>
+    <sep></sep>
+    <category name="%{BKY_CATINITIALIZES}" colour="%{BKY_INITIALIZES_HUE}">
+      <block type="initializes_setup"></block>
+    </category>
+    <category name="%{BKY_CATINOUT}" colour="%{BKY_INOUT_HUE}">
+      <category name="%{BKY_CATDIGITAL}" colour="%{BKY_INOUT_HUE}">
+        <block type="inout_highlow"></block>
+        <block type="inout_digitalpin"></block>
+        <block type="inout_digital_write"></block>
+        <block type="inout_custom_digital_write">
+          <value name="PIN">
+            <block type="inout_digitalpin">
+              <field name="PIN">1</field>
+            </block>
+          </value>
+          <value name="STAT">
+            <block type="inout_highlow">
+              <field name="BOOL">HIGH</field>
+            </block>
+          </value>
+        </block>
+        <block type="inout_digital_read"></block>
+      </category>
+      <category name="%{BKY_CATANALOG}" colour="%{BKY_INOUT_HUE}">
+        <block type="inout_analog_write">
+          <value name="NUM">
+            <block type="math_number">
+              <field name="NUM">255</field>
+            </block>
+          </value>
+        </block>
+        <block type="inout_analog_read"></block>
+      </category>
+      <category name="%{BKY_CATOTHERS}" colour="%{BKY_INOUT_HUE}">
+        <block type="pulsein"></block>
+        <block type="tone"></block>
+        <block type="custom_tone">
+          <value name="FREQ">
+            <block type="math_number">
+              <field name="NUM">255</field>
+            </block>
+          </value>
+        </block>
+      </category>
+    </category>
+    <category name="%{BKY_CATTIMES}" colour="%{BKY_TIMES_HUE}">
+      <block type="millis"></block>
+      <block type="micros"></block>
+      <block type="delay_custom">
+        <value name="DELAY_TIME">
+          <block type="math_number">
+            <field name="NUM">1000</field>
+          </block>
+        </value>
+      </block>
+      <block type="delayMicroseconds_custom">
+        <value name="DELAY_TIME">
+          <block type="math_number">
+            <field name="NUM">1000</field>
+          </block>
+        </value>
+      </block>
+    </category>
+    <category name="%{BKY_CATSERIAL}" colour="%{BKY_SERIAL_HUE}">
+      <block type="serial_available"></block>
+      <block type="serial_print">
+        <value name="CONTENT">
+          <block type="text">
+            <field name="TEXT"></field>
+          </block>
+        </value>
+      </block>
+      <block type="serial_println">
+        <value name="CONTENT">
+          <block type="text">
+            <field name="TEXT"></field>
+          </block>
+        </value>
+      </block>
+      <block type="serial_read"></block>
+      <block type="serial_byte_number"></block>
+    </category>
+    <category name="%{BKY_CATINTERRUPTS}" colour="%{BKY_INTERRUPTS_HUE}">
+      <block type="interrupts_attach"></block>
+      <block type="interrupts_detach"></block>
+      <block type="interrupts"></block>
+      <block type="interrupts_no"></block>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATADAFRUIT}" colour="%{BKY_ADAFRUIT_HUE}">
+      <category name="%{BKY_CATRGBLED}" colour="%{BKY_RGBLED_HUE}">
+        <block type="rgbled_begin"></block>
+        <!--block type="rgbled_setpixelcolor"></block-->
+        <block type="rgbled_setpixelcolor2">
+          <value name="TARGET">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="rgbled_custom_setpixelcolor">
+          <value name="TARGET">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="R">
+            <block type="math_number">
+              <field name="NUM">255</field>
+            </block>
+          </value>
+          <value name="G">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="B">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="rgbled_show"></block>
+      </category>
+      <category name="%{BKY_CATNEOPIXEL}" colour="%{BKY_NEOPIXEL_HUE}">
+        <block type="neopixel_begin"></block>
+        <block type="neopixel_setpixelcolor">
+          <value name="TARGET">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="neopixel_custom_setpixelcolor">
+          <value name="TARGET">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="R">
+            <block type="math_number">
+              <field name="NUM">255</field>
+            </block>
+          </value>
+          <value name="G">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="B">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="neopixel_show"></block>
+      </category>
+      <category name="%{BKY_CATI2CMATRIX}" colour="%{BKY_I2CMATRIX_HUE}">
+        <block type="i2c_matrix_begin"></block>
+        <block type="i2c_matrix_clear"></block>
+        <block type="i2c_matrix_writedisplay"></block>
+        <block type="i2c_matrix_setcursor">
+          <value name="COL">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="ROW">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_settextsize"></block>
+        <block type="i2c_matrix_settextwrap"></block>
+        <block type="i2c_matrix_settextcolor"></block>
+        <block type="i2c_matrix_print">
+          <value name="CONTENT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_setrotation"></block>
+        <block type="i2c_matrix_drawpixel">
+          <value name="X">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_drawline">
+          <value name="X0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="X1">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y1">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_drawcircle">
+          <value name="X">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="D">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_drawrect">
+          <value name="X0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="X1">
+            <block type="math_number">
+              <field name="NUM">5</field>
+            </block>
+          </value>
+          <value name="Y1">
+            <block type="math_number">
+              <field name="NUM">5</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_matrix_fillrect">
+          <value name="X0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="Y0">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="X1">
+            <block type="math_number">
+              <field name="NUM">5</field>
+            </block>
+          </value>
+          <value name="Y1">
+            <block type="math_number">
+              <field name="NUM">5</field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <category name="%{BKY_CATI2CSEVENSEG}" colour="%{BKY_I2C_SEVENSEG_HUE}">
+        <block type="i2c_sevenseg_begin"></block>
+        <block type="i2c_sevenseg_writedisplay"></block>
+        <block type="i2c_sevenseg_print">
+          <value name="NUM">
+            <block type="math_number">
+              <field name="NUM">7777</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_sevenseg_writedigitnum">
+          <value name="POSITION">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="NUM">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+          <value name="DOTS">
+            <block type="i2c_sevenseg_boolean">
+              <field name="BOOL">TRUE</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_sevenseg_drawcolon">
+          <value name="DOTS">
+            <block type="i2c_sevenseg_boolean">
+              <field name="BOOL">TRUE</field>
+            </block>
+          </value>
+        </block>
+        <block type="i2c_sevenseg_boolean"></block>
+      </category>
+      <category name="%{BKY_CATMPR121}" colour="%{BKY_MPR121_HUE}">
+        <block type="mpr121_begin"></block>
+        <block type="mpr121_touched">
+          <value name="CH">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="mpr121_released">
+          <value name="CH">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="mpr121_value">
+          <value name="CH">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="mpr121_reset"></block>
+      </category>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATGROVE}" colour="%{BKY_GROVE_HUE}">
+      <category name="%{BKY_CATGROVEINPUT}" colour="%{BKY_GROVEINPUT_HUE}">
+        <block type="grove_button"></block>
+        <block type="grove_touch"></block>
+        <block type="grove_rotary_angle"></block>
+        <block type="grove_ir_receiver_init"></block>
+        <block type="grove_ir_receiver_check_data"></block>
+        <block type="grove_ir_receiver_receive"></block>
+        <block type="grove_ir_receiver_data"></block>
+        <!--block type="grove_tilt_switch"></block-->
+        <!--block type="grove_thumb_joystick"></block-->
+      </category>
+      <category name="%{BKY_CATGROVEOUTPUT}" colour="%{BKY_GROVEOUTPUT_HUE}">
+        <block type="grove_led"></block>
+        <block type="grove_relay"></block>
+        <block type="grove_buzzer"></block>
+        <block type="grove_ir_emitter_send">
+          <value name="DATA">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <!--block type="grove_rgb_led"></block-->
+        <!--block type="grove_motor_shield"></block-->
+      </category>
+      <category name="%{BKY_CATGROVESENSOR}" colour="%{BKY_GROVESENSOR_HUE}">
+        <!--block type="grove_line_finder"></block-->
+        <!--block type="grove_pir_motion_sensor"></block-->
+        <block type="grove_light_sensor"></block>
+        <block type="grove_temporature_sensor"></block>
+        <block type="grove_sound_sensor"></block>
+        <!--block type="grove_ultrasonic_ranger"></block-->
+      </category>
+      <category name="%{BKY_CATGROVERGBLCD}" colour="%{BKY_GROVERGBLCD_HUE}">
+        <block type="grove_rgb_lcd_begin"></block>
+        <block type="grove_rgb_lcd_print">
+          <value name="PRINT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="grove_rgb_lcd_setcolor"></block>
+        <block type="grove_rgb_lcd_custom_setcursor">
+          <value name="COL">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="ROW">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="grove_rgb_lcd_clear"></block>
+        <!--block type="lcd_scrolldisplayright"></block-->
+        <!--block type="lcd_scrolldisplayleft"></block-->
+        <block type="grove_rgb_lcd_switch_scroll"></block>
+        <!--block type="lcd_lefttoright"></block-->
+        <!--block type="lcd_righttoleft"></block-->
+        <!--block type="grove_serial_lcd_power"></block-->
+        <!--block type="grove_serial_lcd_effect"></block-->
+      </category>
+    </category>
+    <category name="%{BKY_CATROBOT}" colour="%{BKY_ROBOT_HUE}">
+      <category name="%{BKY_CATSHIELDBOT}" colour="%{BKY_SHIELD_BOT_HUE}">
+        <block type="shield_bot_setmaxspeed"></block>
+        <block type="shield_bot_setmaxspeed_lr"></block>
+        <block type="shield_bot_move"></block>
+        <block type="shield_bot_drive">
+          <value name="LEFT">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+          <value name="RIGHT">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="shield_bot_motor">
+          <value name="DIRECTION">
+            <block type="math_number">
+              <field name="NUM">0</field>
+            </block>
+          </value>
+        </block>
+        <block type="shield_bot_readsensor"></block>
+      </category>
+      <category name="%{BKY_CATAEROBOT}" colour="%{BKY_AEROBOT_HUE}">
+        <block type="aerobot_move"></block>
+        <block type="aerobot_rotate"></block>
+        <block type="aerobot_lightsens"></block>
+        <block type="aerobot_distsens"></block>
+        <block type="aerobot_linesens"></block>
+        <block type="aerobot_setled"></block>
+      </category>
+    </category>
+    <category name="%{BKY_CATETHERNET}" colour="%{BKY_ETHERNET_HUE}">
+      <category name="%{BKY_CATETHERNETINIT}" colour="%{BKY_ETHERNET_HUE}">
+        <block type="ethernet_begin_dhcp">
+          <value name="MAC_ADDRESS">
+            <block type="ethernet_mac_address"></block>
+          </value>
+        </block>
+        <block type="ethernet_localip"></block>
+      </category>
+      <category name="%{BKY_CATETHERNETCLIENT}" colour="%{BKY_ETHERNET_HUE}">
+        <block type="ethernet_connect">
+          <value name="SERVER">
+            <block type="text">
+              <field name="TEXT">www.google.com</field>
+            </block>
+          </value>
+        </block>
+        <block type="ethernet_stop"></block>
+        <block type="ethernet_connected"></block>
+        <block type="ethernet_available"></block>
+        <block type="ethernet_print">
+          <value name="TEXT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="ethernet_println">
+          <value name="TEXT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="ethernet_read"></block>
+        <block type="ethernet_get_request"></block>
+        <!--block type="ethernet_post_request"></block-->
+      </category>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATCLOUDSERVICE}" colour="%{BKY_CLOUDSERVICE_HUE}">
+      <category name="%{BKY_CATIFTTT}" colour="%{BKY_IFTTT_HUE}">
+        <block type="text">
+          <field name="TEXT">maker.ifttt.com</field>
+        </block>
+        <block type="ifttt_get_url">
+          <value name="EVENT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="KEY">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <category name="%{BKY_CATM2X}" colour="%{BKY_M2X_HUE}">
+        <block type="m2x_begin">
+          <value name="ID">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="STREAM_NAME">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="KEY">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="m2x_update_value">
+          <value name="VALUE">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+        <block type="m2x_list_value"></block>
+        <block type="m2x_custom_list_value"></block>
+        <block type="m2x_delete_values"></block>
+        <block type="m2x_update_location">
+          <value name="LOCATION_NAME">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <category name="%{BKY_CATBLYNK}" colour="%{BKY_BLYNK_HUE}">
+        <block type="blynk_ethernet_begin">
+          <value name="AUTH">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="MAC_ADDRESS">
+            <block type="ethernet_mac_address"></block>
+          </value>
+        </block>
+        <block type="blynk_connect"></block>
+        <block type="blynk_write"></block>
+        <block type="blynk_param"></block>
+        <block type="blynk_merge_param"></block>
+        <block type="blynk_virtual_write">
+          <value name="VALUE">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+        <block type="blynk_email">
+          <value name="ADDRESS">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="TITLE">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+          <value name="BODY">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="blynk_notify">
+          <value name="TEXT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+        <block type="blynk_tweet">
+          <value name="TEXT">
+            <block type="text">
+              <field name="TEXT"></field>
+            </block>
+          </value>
+        </block>
+      </category>
+    </category>
+    <sep></sep>
+    <category name="%{BKY_CATSERVO}" colour="%{BKY_SERVO_HUE}">
+      <block type="servo_write">
+        <value name="ANGLE">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+      <block type="servo_writeus">
+        <value name="ANGLE_US">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+      <block type="servo_read"></block>
+      <block type="servo_attached"></block>
+      <block type="servo_attach"></block>
+      <block type="servo_custom_attach"></block>
+      <block type="servo_detach"></block>
+    </category>
+    <category name="%{BKY_CATULTRASONIC}" colour="%{BKY_ULTRASONIC_HUE}">
+      <block type="ultrasonic_setting"></block>
+      <block type="ultrasonic_maxrange"></block>
+      <block type="ultrasonic_distance"></block>
+    </category>
+    <category name="%{BKY_CATOTHERS}" colour="%{BKY_OTHERS_HUE}">
+      <block type="pulsein"></block>
+      <block type="tone"></block>
+      <block type="custom_tone">
+        <value name="FREQ">
+          <block type="math_number">
+            <field name="NUM">255</field>
+          </block>
+        </value>
+      </block>
+    </category>
+
+  </xml>
+</body>
+
+</html>

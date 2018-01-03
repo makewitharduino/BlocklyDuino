@@ -54,7 +54,8 @@ Blockly.Arduino['variables_set'] = function(block) {
       Blockly.Arduino.ORDER_ASSIGNMENT) || '0';
   var varName = Blockly.Arduino.variableDB_.getName(this.getFieldValue('VAR'),
       Blockly.Variables.NAME_TYPE);
-  var variables = Blockly.Variables.allVariablesAndTypes(this.workspace);
+  // var variables = Blockly.Variables.allVariablesAndTypes(this.workspace);
+  var variables = Blockly.Variables.allVariables(this.workspace);
   var code;
   for (var x = 0; x < variables.length; x++) {
     if(variables[x][0] == varName && variables[x][1] == 'Array'){

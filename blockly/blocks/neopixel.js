@@ -24,40 +24,39 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.neopixel');
+goog.provide('Blockly.Constants.Neopixel');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.neopixel.HUE = 215;
+Blockly.Constants.Neopixel.image = './media/neopixel.jpg';
 
-Blockly.Blocks.neopixel.image = filepath.media + '/neopixel.jpg';
-
-Blockly.Blocks.neopixel.checkBlocks = function(obj) {
-  var legal = null;
-  var current = obj.type;
-  var blocks = obj.workspace.getAllBlocks();
-  for (var i = 0; i < blocks.length; i++) {
-    if ((blocks[i].type == 'neopixel_setpixelcolor' ||
-        blocks[i].type == 'neopixel_custom_setpixelcolor' ||
-        blocks[i].type == 'neopixel_show' ||
-        blocks[i].type == 'neopixel_setpixelcolor2') &&
-        legal == null){
-        if (blocks[i].type != current)  legal = true;
-        else  legal = false;
+Blockly.Constants.Neopixel.checkBlocks = function (obj) {
+    var legal = null;
+    var current = obj.type;
+    var blocks = obj.workspace.getAllBlocks();
+    for (var i = 0; i < blocks.length; i++) {
+        if ((blocks[i].type == 'neopixel_setpixelcolor' ||
+                blocks[i].type == 'neopixel_custom_setpixelcolor' ||
+                blocks[i].type == 'neopixel_show' ||
+                blocks[i].type == 'neopixel_setpixelcolor2') &&
+            legal == null) {
+            if (blocks[i].type != current) legal = true;
+            else legal = false;
+        }
+        if (blocks[i].type == 'neopixel_begin') {
+            return true;
+        }
     }
-    if(blocks[i].type == 'neopixel_begin'){
-      return true;
-    }
-  }
-  return legal;
+    return legal;
 };
 
 Blockly.Blocks['neopixel_begin'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.NEOPIXEL_BEGIN_HELPURL);
-        this.setColour(Blockly.Blocks.neopixel.HUE);
+        this.setColour(Blockly.Msg.NEOPIXEL_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.neopixel.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Neopixel.image, 64, 64))
             .appendField(Blockly.Msg.NEOPIXEL_BEGIN_SETTING)
             .appendField(Blockly.Msg.NEOPIXEL_BEGIN_NUM)
             .appendField(new Blockly.FieldTextInput("16"), "NUM");
@@ -72,7 +71,7 @@ Blockly.Blocks['neopixel_begin'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.NEOPIXEL_BEGIN_TOOLTIP);
     },
-    onchange: function() {
+    onchange: function () {
         if (!this.workspace) {
             // Block has been deleted.
             return;
@@ -82,11 +81,11 @@ Blockly.Blocks['neopixel_begin'] = {
 };
 
 Blockly.Blocks['neopixel_setpixelcolor'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_HELPURL);
-        this.setColour(Blockly.Blocks.neopixel.HUE);
+        this.setColour(Blockly.Msg.NEOPIXEL_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.neopixel.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Neopixel.image, 64, 64))
         this.appendValueInput("TARGET")
             .setCheck("Number")
             .appendField(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_TARGET)
@@ -99,25 +98,25 @@ Blockly.Blocks['neopixel_setpixelcolor'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Neopixel.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.neopixel.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
 };
 
 Blockly.Blocks['neopixel_custom_setpixelcolor'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_HELPURL);
-        this.setColour(Blockly.Blocks.neopixel.HUE);
+        this.setColour(Blockly.Msg.NEOPIXEL_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.neopixel.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Neopixel.image, 64, 64))
         this.appendValueInput("TARGET")
             .setCheck("Number")
             .appendField(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_TARGET)
@@ -135,40 +134,40 @@ Blockly.Blocks['neopixel_custom_setpixelcolor'] = {
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.NEOPIXEL_CUSTOM_SETPIXELCOLOR_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Neopixel.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.neopixel.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
 };
 
 Blockly.Blocks['neopixel_show'] = {
-    init: function() {
+    init: function () {
         this.setHelpUrl(Blockly.Msg.NEOPIXEL_SHOW_HELPURL);
-        this.setColour(Blockly.Blocks.neopixel.HUE);
+        this.setColour(Blockly.Msg.NEOPIXEL_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.neopixel.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Neopixel.image, 64, 64))
             .appendField(Blockly.Msg.NEOPIXEL_SHOW);
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setTooltip(Blockly.Msg.NEOPIXEL_SHOW_TOOLTIP);
     },
-  onchange: function() {
-    if (!this.workspace) {
-      // Block has en deleted.
-      return;
+    onchange: function () {
+        if (!this.workspace) {
+            // Block has en deleted.
+            return;
+        }
+        if (!Blockly.Constants.Neopixel.checkBlocks(this)) {
+            this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
+        } else {
+            this.setWarningText(null);
+        }
     }
-    if (!Blockly.Blocks.neopixel.checkBlocks(this)) {
-      this.setWarningText(Blockly.Msg.NEOPIXEL_WARNING);
-    } else {
-      this.setWarningText(null);
-    }
-  }
 };

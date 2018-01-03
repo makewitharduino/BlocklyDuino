@@ -26,16 +26,16 @@
  * @fileoverview Helper functions for generating seeeduino grove blocks.
  * @author gasolin@gmail.com (Fred Lin)
  */
+'use strict';
 
-goog.provide('Blockly.Blocks.shield_bot');
+goog.provide('Blockly.Constants.Shield_bot');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.shield_bot.HUE = 190;
+Blockly.Constants.Shield_bot.image = './media/shield_bot.jpg';
 
-Blockly.Blocks.shield_bot.image = filepath.media + '/shield_bot.jpg';
-
-Blockly.Blocks.shield_bot.checkBlocks = function(obj) {
+Blockly.Constants.Shield_bot.checkBlocks = function(obj) {
     var legal = false;
     var current = obj.type;
     var blocks = obj.workspace.getAllBlocks();
@@ -62,9 +62,9 @@ Blockly.Blocks.shield_bot.checkBlocks = function(obj) {
 Blockly.Blocks['shield_bot_setmaxspeed'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_SETMAXSPEED_TITLE)
             .appendField(new Blockly.FieldTextInput("255"), "SPEED");
         this.setPreviousStatement(true, null);
@@ -76,7 +76,7 @@ Blockly.Blocks['shield_bot_setmaxspeed'] = {
             // Block has en deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
             this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -87,9 +87,9 @@ Blockly.Blocks['shield_bot_setmaxspeed'] = {
 Blockly.Blocks['shield_bot_setmaxspeed_lr'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_SETMAXSPEED_TITLE)
             .appendField(Blockly.Msg.SHIELD_BOT_LEFT_SPEED)
             .appendField(new Blockly.FieldTextInput("255"), "LEFT")
@@ -104,7 +104,7 @@ Blockly.Blocks['shield_bot_setmaxspeed_lr'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -115,9 +115,9 @@ Blockly.Blocks['shield_bot_setmaxspeed_lr'] = {
 Blockly.Blocks['shield_bot_right_motor'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_RIGHT_MOTOR_TITLE);
         this.appendValueInput("DIRECTION")
             .setCheck("Number")
@@ -132,7 +132,7 @@ Blockly.Blocks['shield_bot_right_motor'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -143,9 +143,9 @@ Blockly.Blocks['shield_bot_right_motor'] = {
 Blockly.Blocks['shield_bot_motor'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_CONTROL)
             .appendField(new Blockly.FieldDropdown([
                 [Blockly.Msg.RIGHT, "rightMotor"],
@@ -165,7 +165,7 @@ Blockly.Blocks['shield_bot_motor'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -176,9 +176,9 @@ Blockly.Blocks['shield_bot_motor'] = {
 Blockly.Blocks['shield_bot_drive'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_DRIVE_TITLE);
         this.appendValueInput("LEFT")
             .setCheck("Number")
@@ -196,7 +196,7 @@ Blockly.Blocks['shield_bot_drive'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -207,9 +207,9 @@ Blockly.Blocks['shield_bot_drive'] = {
 Blockly.Blocks['shield_bot_faststop'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_faststop_TITLE);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -220,7 +220,7 @@ Blockly.Blocks['shield_bot_faststop'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -231,9 +231,9 @@ Blockly.Blocks['shield_bot_faststop'] = {
 Blockly.Blocks['shield_bot_faststop_left'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_FASTSTOP_LEFT_TITLE);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -244,7 +244,7 @@ Blockly.Blocks['shield_bot_faststop_left'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -255,9 +255,9 @@ Blockly.Blocks['shield_bot_faststop_left'] = {
 Blockly.Blocks['shield_bot_faststop_right'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_FASTSTOP_RIGHT_TITLE);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -268,7 +268,7 @@ Blockly.Blocks['shield_bot_faststop_right'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -279,9 +279,9 @@ Blockly.Blocks['shield_bot_faststop_right'] = {
 Blockly.Blocks['shield_bot_move'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_MOVE_TITLE)
             .appendField(new Blockly.FieldDropdown([
                 [Blockly.Msg.SHIELD_BOT_FORWARD, "forward"],
@@ -299,7 +299,7 @@ Blockly.Blocks['shield_bot_move'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);
@@ -310,9 +310,9 @@ Blockly.Blocks['shield_bot_move'] = {
 Blockly.Blocks['shield_bot_readsensor'] = {
     init: function() {
         this.setHelpUrl(Blockly.Msg.SHIELD_BOT_HELPURL);
-        this.setColour(Blockly.Blocks.shield_bot.HUE);
+        this.setColour(Blockly.Msg.SHIELD_BOT_HUE);
         this.appendDummyInput()
-            .appendField(new Blockly.FieldImage(Blockly.Blocks.shield_bot.image, 64, 64))
+            .appendField(new Blockly.FieldImage(Blockly.Constants.Shield_bot.image, 64, 64))
             .appendField(Blockly.Msg.SHIELD_BOT_READ_SENSOR_TITLE)
             .appendField(Blockly.Msg.INDEX)
             .appendField(new Blockly.FieldDropdown(profile.default.shield_bot_sensor), "SENSOR");
@@ -324,7 +324,7 @@ Blockly.Blocks['shield_bot_readsensor'] = {
             // Block has been deleted.
             return;
         }
-        if (!Blockly.Blocks.shield_bot.checkBlocks(this)) {
+        if (!Blockly.Constants.Shield_bot.checkBlocks(this)) {
           this.setWarningText(Blockly.Msg.SHEILD_BOT_WARNING);
         } else {
             this.setWarningText(null);

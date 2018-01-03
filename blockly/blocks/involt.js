@@ -24,13 +24,20 @@
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.involt');
+goog.provide('Blockly.Blocks.involt');  // Deprecated
+goog.provide('Blockly.Constants.Involt');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.involt.HUE = 65;
+/**
+ * Common HSV hue for all blocks in this category.
+ * Should be the same as Blockly.Msg.LOGIC_HUE.
+ * @readonly
+ */
+Blockly.Constants.Involt.HUE = 65;
+/** @deprecated Use Blockly.Constants.Inout.HUE */
+Blockly.Blocks.involt.HUE = Blockly.Constants.Involt.HUE;
 
 Blockly.Blocks['involt_directmode'] = {
   init: function() {

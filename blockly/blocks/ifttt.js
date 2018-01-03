@@ -19,28 +19,24 @@
  */
 
 /**
- * @fileoverview Helper functions for generating Arduino blocks.
- * @author gasolin@gmail.com (Fred Lin)
+ * @author ok.okada.hiroyuki@gmail.com
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.ifttt');
+goog.provide('Blockly.Constants.Ifttt');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.ifttt.HUE = 65;
-
-Blockly.Blocks.ifttt.image = filepath.media+'/ifttt.png';
+Blockly.Constants.Ifttt.image = './media/ifttt.png';
 
 Blockly.Blocks['ifttt_get_url'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.IFTTT_GET_URL_HELPURL);
-    this.setColour(Blockly.Blocks.ifttt.HUE);
+    this.setColour(Blockly.Msg.IFTTT_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.IFTTT_GET_URL_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.ifttt.image, 64, 64));
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Ifttt.image, 64, 64));
     this.appendValueInput("EVENT")
       .setCheck("String")
       .setAlign(Blockly.ALIGN_RIGHT)

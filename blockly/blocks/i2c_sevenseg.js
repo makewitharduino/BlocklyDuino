@@ -24,32 +24,29 @@
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.i2c_sevenseg');
+goog.provide('Blockly.Constants.I2c_sevenseg');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.i2c_sevenseg.HUE = 215;
+Blockly.Constants.I2c_sevenseg.image = './media/sevenseg.jpg';
 
-Blockly.Blocks.i2c_sevenseg.image = filepath.media+'/sevenseg.jpg';
-
-Blockly.Blocks.i2c_sevenseg.checkBlocks = function(obj) {
+Blockly.Constants.I2c_sevenseg.checkBlocks = function (obj) {
   var legal = null;
   var current = obj.type;
   var blocks = obj.workspace.getAllBlocks();
   for (var i = 0; i < blocks.length; i++) {
     if ((blocks[i].type == 'i2c_sevenseg_print' ||
-         blocks[i].type == 'i2c_sevenseg_writedisplay' ||
-         blocks[i].type == 'i2c_sevenseg_writedigitnum' ||
-         blocks[i].type == 'i2c_sevenseg_drawcolon' ||
-         blocks[i].type == 'i2c_sevenseg_boolean') &&
-         legal == null){
-      if (blocks[i].type != current)  legal = true;
-      else  legal = false;
+        blocks[i].type == 'i2c_sevenseg_writedisplay' ||
+        blocks[i].type == 'i2c_sevenseg_writedigitnum' ||
+        blocks[i].type == 'i2c_sevenseg_drawcolon' ||
+        blocks[i].type == 'i2c_sevenseg_boolean') &&
+      legal == null) {
+      if (blocks[i].type != current) legal = true;
+      else legal = false;
     }
     //find i2c_sevenseg_begin block
-    if(blocks[i].type == 'i2c_sevenseg_begin'){
+    if (blocks[i].type == 'i2c_sevenseg_begin') {
       return true;
     }
   }
@@ -57,20 +54,20 @@ Blockly.Blocks.i2c_sevenseg.checkBlocks = function(obj) {
 };
 
 Blockly.Blocks['i2c_sevenseg_begin'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.I2C_SEVENSEG_HELPURL);
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.I2C_SEVENSEG_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.i2c_sevenseg.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.I2c_sevenseg.image, 64, 64))
       .appendField(Blockly.Msg.I2C_SEVENSEG_BEGIN_TITLE)
       .appendField(Blockly.Msg.I2C_SEVENSEG_ADDRESS)
-      .appendField(new Blockly.FieldDropdown(profile.default.led_backpack_address),"ADDRESS");
+      .appendField(new Blockly.FieldDropdown(profile.default.led_backpack_address), "ADDRESS");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip('');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
@@ -80,27 +77,27 @@ Blockly.Blocks['i2c_sevenseg_begin'] = {
 };
 
 Blockly.Blocks['i2c_sevenseg_print'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.I2C_SEVENSEG_HELPURL);
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.I2C_SEVENSEG_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.i2c_sevenseg.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.I2c_sevenseg.image, 64, 64))
       .appendField(Blockly.Msg.I2C_SEVENSEG_PRINT);
     this.appendValueInput("NUM")
       .setCheck("Number")
       .setAlign(Blockly.ALIGN_RIGHT)
       .appendField(Blockly.Msg.I2C_SEVENSEG_NUM);
-    this.setPreviousStatement(true,null);
-    this.setNextStatement(true,null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setTooltip('');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.i2c_sevenseg.checkBlocks(this)) {
+    if (!Blockly.Constants.I2c_sevenseg.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.I2C_SEVENSEG_WARNING);
     } else {
       this.setWarningText(null);
@@ -109,24 +106,24 @@ Blockly.Blocks['i2c_sevenseg_print'] = {
 };
 
 Blockly.Blocks['i2c_sevenseg_writedisplay'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.I2C_SEVENSEG_HELPURL);
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.I2C_SEVENSEG_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.i2c_sevenseg.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.I2c_sevenseg.image, 64, 64))
       .appendField(Blockly.Msg.I2C_SEVENSEG_WRITEDISPLAY);
     this.setInputsInline(true);
-    this.setPreviousStatement(true,null);
-    this.setNextStatement(true,null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setTooltip('');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.i2c_sevenseg.checkBlocks(this)) {
+    if (!Blockly.Constants.I2c_sevenseg.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.I2C_SEVENSEG_WARNING);
     } else {
       this.setWarningText(null);
@@ -135,33 +132,33 @@ Blockly.Blocks['i2c_sevenseg_writedisplay'] = {
 };
 
 Blockly.Blocks['i2c_sevenseg_writedigitnum'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.I2C_SEVENSEG_HELPURL);
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.I2C_SEVENSEG_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.i2c_sevenseg.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.I2c_sevenseg.image, 64, 64))
       .appendField(Blockly.Msg.I2C_SEVENSEG_WRITEDIGITNUM);
     this.appendValueInput("POSITION")
       .setCheck("Number")
-      .appendField(Blockly.Msg.I2C_SEVENSEG_POSITION)
+      .appendField(Blockly.Msg.I2C_SEVENSEG_POSITION);
     this.appendValueInput("NUM")
       .setCheck("Number")
       .appendField(Blockly.Msg.I2C_SEVENSEG_NUM);
     this.appendValueInput("DOTS")
-      .setCheck("BOOLEAN")
+      .setCheck("Boolean")
       .appendField(Blockly.Msg.I2C_SEVENSEG_DOTS);
     this.setInputsInline(true);
-    this.setPreviousStatement(true,null);
-    this.setNextStatement(true,null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setTooltip('');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.i2c_sevenseg.checkBlocks(this)) {
+    if (!Blockly.Constants.I2c_sevenseg.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.I2C_SEVENSEG_WARNING);
     } else {
       this.setWarningText(null);
@@ -170,26 +167,26 @@ Blockly.Blocks['i2c_sevenseg_writedigitnum'] = {
 };
 
 Blockly.Blocks['i2c_sevenseg_drawcolon'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.I2C_SEVENSEG_HELPURL);
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.I2C_SEVENSEG_TITLE)
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.i2c_sevenseg.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.I2c_sevenseg.image, 64, 64));
     this.appendValueInput("DOTS")
-      .setCheck("BOOLEAN")
+      .setCheck("Boolean")
       .appendField(Blockly.Msg.I2C_SEVENSEG_COLON);
     this.setInputsInline(true);
-    this.setPreviousStatement(true,null);
-    this.setNextStatement(true,null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setTooltip('');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.i2c_sevenseg.checkBlocks(this)) {
+    if (!Blockly.Constants.I2c_sevenseg.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.I2C_SEVENSEG_WARNING);
     } else {
       this.setWarningText(null);
@@ -198,21 +195,22 @@ Blockly.Blocks['i2c_sevenseg_drawcolon'] = {
 };
 
 Blockly.Blocks['i2c_sevenseg_boolean'] = {
-  init: function() {
-    var BOOLEANS =
-        [[Blockly.Msg.I2C_SEVENSEG_BOOLEAN_TRUE, 'TRUE'],
-         [Blockly.Msg.I2C_SEVENSEG_BOOLEAN_FALSE, 'FALSE']];
-    this.setColour(Blockly.Blocks.i2c_sevenseg.HUE);
+  init: function () {
+    var BOOLEANS = [
+      [Blockly.Msg.I2C_SEVENSEG_BOOLEAN_TRUE, 'TRUE'],
+      [Blockly.Msg.I2C_SEVENSEG_BOOLEAN_FALSE, 'FALSE']
+    ];
+    this.setColour(Blockly.Msg.I2C_SEVENSEG_HUE);
     this.setOutput(true, 'Boolean');
     this.appendDummyInput()
       .appendField(new Blockly.FieldDropdown(BOOLEANS), 'BOOL');
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;
     }
-    if (!Blockly.Blocks.i2c_sevenseg.checkBlocks(this)) {
+    if (!Blockly.Constants.I2c_sevenseg.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.I2C_SEVENSEG_WARNING);
     } else {
       this.setWarningText(null);

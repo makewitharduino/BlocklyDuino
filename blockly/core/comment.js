@@ -39,10 +39,9 @@ goog.require('goog.userAgent');
  */
 Blockly.Comment = function(block) {
   Blockly.Comment.superClass_.constructor.call(this, block);
-  this.createIcon_();
+  this.createIcon();
 };
 goog.inherits(Blockly.Comment, Blockly.Icon);
-
 
 /**
  * Comment text (if bubble is not visible).
@@ -63,25 +62,29 @@ Blockly.Comment.prototype.width_ = 160;
 Blockly.Comment.prototype.height_ = 80;
 
 /**
- * Create the icon on the block.
+ * Draw the comment icon.
+ * @param {!Element} group The icon group.
  * @private
  */
-Blockly.Comment.prototype.createIcon_ = function() {
-  Blockly.Icon.prototype.createIcon_.call(this);
-  /* Here's the markup that will be generated:
-  <circle class="blocklyIconShield" r="8" cx="8" cy="8"/>
-  <text class="blocklyIconMark" x="8" y="13">?</text>
-  */
-  var iconShield = Blockly.createSvgElement('circle',
-      {'class': 'blocklyIconShield',
-       'r': Blockly.Icon.RADIUS,
-       'cx': Blockly.Icon.RADIUS,
-       'cy': Blockly.Icon.RADIUS}, this.iconGroup_);
-  this.iconMark_ = Blockly.createSvgElement('text',
-      {'class': 'blocklyIconMark',
-       'x': Blockly.Icon.RADIUS,
-       'y': 2 * Blockly.Icon.RADIUS - 3}, this.iconGroup_);
-  this.iconMark_.appendChild(document.createTextNode('?'));
+Blockly.Comment.prototype.drawIcon_ = function(group) {
+  // Circle.
+  Blockly.utils.createSvgElement('circle',
+      {'class': 'blocklyIconShape', 'r': '8', 'cx': '8', 'cy': '8'},
+      group);
+  // Can't use a real '?' text character since different browsers and operating
+  // systems render it differently.
+  // Body of question mark.
+  Blockly.utils.createSvgElement('path',
+      {'class': 'blocklyIconSymbol',
+      'd': 'm6.8,10h2c0.003,-0.617 0.271,-0.962 0.633,-1.266 2.875,-2.405' +
+      '0.607,-5.534 -3.765,-3.874v1.7c3.12,-1.657 3.698,0.118 2.336,1.25' +
+      '-1.201,0.998 -1.201,1.528 -1.204,2.19z'},
+      group);
+  // Dot of question mark.
+  Blockly.utils.createSvgElement('rect',
+      {'class': 'blocklyIconSymbol',
+      'x': '6.8', 'y': '10.78', 'height': '2', 'width': '2'},
+      group);
 };
 
 /**
@@ -99,18 +102,35 @@ Blockly.Comment.prototype.createEditor_ = function() {
       </body>
     </foreignObject>
   */
-  this.foreignObject_ = Blockly.createSvgElement('foreignObject',
+  this.foreignObject_ = Blockly.utils.createSvgElement('foreignObject',
       {'x': Blockly.Bubble.BORDER_WIDTH, 'y': Blockly.Bubble.BORDER_WIDTH},
       null);
   var body = document.createElementNS(Blockly.HTML_NS, 'body');
   body.setAttribute('xmlns', Blockly.HTML_NS);
   body.className = 'blocklyMinimalBody';
-  this.textarea_ = document.createElementNS(Blockly.HTML_NS, 'textarea');
-  this.textarea_.className = 'blocklyCommentTextarea';
-  this.textarea_.setAttribute('dir', Blockly.RTL ? 'RTL' : 'LTR');
-  body.appendChild(this.textarea_);
+  var textarea = document.createElementNS(Blockly.HTML_NS, 'textarea');
+  textarea.className = 'blocklyCommentTextarea';
+  textarea.setAttribute('dir', this.block_.RTL ? 'RTL' : 'LTR');
+  body.appendChild(textarea);
+  this.textarea_ = textarea;
   this.foreignObject_.appendChild(body);
-  Blockly.bindEvent_(this.textarea_, 'mouseup', this, this.textareaFocus_);
+  Blockly.bindEventWithChecks_(textarea, 'mouseup', this, this.textareaFocus_);
+  // Don't zoom with mousewheel.
+  Blockly.bindEventWithChecks_(textarea, 'wheel', this, function(e) {
+    e.stopPropagation();
+  });
+  Blockly.bindEventWithChecks_(textarea, 'change', this, function(
+      /* eslint-disable no-unused-vars */ e
+      /* eslint-enable no-unused-vars */) {
+    if (this.text_ != textarea.value) {
+      Blockly.Events.fire(new Blockly.Events.BlockChange(
+        this.block_, 'comment', null, this.text_, textarea.value));
+      this.text_ = textarea.value;
+    }
+  });
+  setTimeout(function() {
+    textarea.focus();
+  }, 0);
   return this.foreignObject_;
 };
 
@@ -134,12 +154,14 @@ Blockly.Comment.prototype.updateEditable = function() {
  * @private
  */
 Blockly.Comment.prototype.resizeBubble_ = function() {
-  var size = this.bubble_.getBubbleSize();
-  var doubleBorderWidth = 2 * Blockly.Bubble.BORDER_WIDTH;
-  this.foreignObject_.setAttribute('width', size.width - doubleBorderWidth);
-  this.foreignObject_.setAttribute('height', size.height - doubleBorderWidth);
-  this.textarea_.style.width = (size.width - doubleBorderWidth - 4) + 'px';
-  this.textarea_.style.height = (size.height - doubleBorderWidth - 4) + 'px';
+  if (this.isVisible()) {
+    var size = this.bubble_.getBubbleSize();
+    var doubleBorderWidth = 2 * Blockly.Bubble.BORDER_WIDTH;
+    this.foreignObject_.setAttribute('width', size.width - doubleBorderWidth);
+    this.foreignObject_.setAttribute('height', size.height - doubleBorderWidth);
+    this.textarea_.style.width = (size.width - doubleBorderWidth - 4) + 'px';
+    this.textarea_.style.height = (size.height - doubleBorderWidth - 4) + 'px';
+  }
 };
 
 /**
@@ -151,6 +173,8 @@ Blockly.Comment.prototype.setVisible = function(visible) {
     // No change.
     return;
   }
+  Blockly.Events.fire(
+      new Blockly.Events.Ui(this.block_, 'commentOpen', !visible, visible));
   if ((!this.block_.isEditable() && !this.textarea_) || goog.userAgent.IE) {
     // Steal the code from warnings to make an uneditable text bubble.
     // MSIE does not support foreignobject; textareas are impossible.
@@ -165,13 +189,11 @@ Blockly.Comment.prototype.setVisible = function(visible) {
   if (visible) {
     // Create the bubble.
     this.bubble_ = new Blockly.Bubble(
-        /** @type {!Blockly.Workspace} */ (this.block_.workspace),
+        /** @type {!Blockly.WorkspaceSvg} */ (this.block_.workspace),
         this.createEditor_(), this.block_.svgPath_,
-        this.iconX_, this.iconY_,
-        this.width_, this.height_);
-    this.bubble_.registerResizeEvent(this, this.resizeBubble_);
+        this.iconXY_, this.width_, this.height_);
+    this.bubble_.registerResizeEvent(this.resizeBubble_.bind(this));
     this.updateColour();
-    this.text_ = null;
   } else {
     // Dispose of the bubble.
     this.bubble_.dispose();
@@ -189,7 +211,8 @@ Blockly.Comment.prototype.setVisible = function(visible) {
  * @param {!Event} e Mouse up event.
  * @private
  */
-Blockly.Comment.prototype.textareaFocus_ = function(e) {
+Blockly.Comment.prototype.textareaFocus_ = function(
+  /* eslint-disable no-unused-vars */ e /* eslint-enable no-unused-vars */) {
   // Ideally this would be hooked to the focus event for the comment.
   // However doing so in Firefox swallows the cursor for unknown reasons.
   // So this is hooked to mouseup instead.  No big deal.
@@ -238,10 +261,13 @@ Blockly.Comment.prototype.getText = function() {
  * @param {string} text Comment text.
  */
 Blockly.Comment.prototype.setText = function(text) {
+  if (this.text_ != text) {
+    Blockly.Events.fire(new Blockly.Events.BlockChange(
+      this.block_, 'comment', null, this.text_, text));
+    this.text_ = text;
+  }
   if (this.textarea_) {
     this.textarea_.value = text;
-  } else {
-    this.text_ = text;
   }
 };
 
@@ -249,6 +275,9 @@ Blockly.Comment.prototype.setText = function(text) {
  * Dispose of this comment.
  */
 Blockly.Comment.prototype.dispose = function() {
+  if (Blockly.Events.isEnabled()) {
+    this.setText('');  // Fire event to delete comment.
+  }
   this.block_.comment = null;
   Blockly.Icon.prototype.dispose.call(this);
 };

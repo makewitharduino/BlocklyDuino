@@ -23,29 +23,28 @@
  */
 
 /**
- * @fileoverview Helper functions for generating seeeduino grove blocks.
- * @author gasolin@gmail.com (Fred Lin)
+ * @author ok.okada.hiroyuki@gmail.com
  */
+'use strict';
 
-goog.provide('Blockly.Blocks.aerobot');
+goog.provide('Blockly.Constants.Aerobot');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.aerobot.HUE = 200;
+Blockly.Constants.Aerobot.image = './media/aerobot.jpg';
 
-Blockly.Blocks.aerobot.image = filepath.media + '/aerobot.jpg';
-
-Blockly.Blocks.aerobot.checkBlocks = function(obj) {
+Blockly.Constants.Aerobot.checkBlocks = function (obj) {
   var legal = false;
   var current = obj.type;
   var blocks = obj.workspace.getAllBlocks();
   for (var i = 0; i < blocks.length; i++) {
     if (blocks[i].type == 'aerobot_move' ||
-        blocks[i].type == 'aerobot_rotate' ||
-        blocks[i].type == 'aerobot_lightsens' ||
-        blocks[i].type == 'aerobot_linesens' ||
-        blocks[i].type == 'aerobot_setled' ||
-        blocks[i].type == 'aerobot_distsens') {
+      blocks[i].type == 'aerobot_rotate' ||
+      blocks[i].type == 'aerobot_lightsens' ||
+      blocks[i].type == 'aerobot_linesens' ||
+      blocks[i].type == 'aerobot_setled' ||
+      blocks[i].type == 'aerobot_distsens') {
       if (blocks[i].type != current) {
         legal = true;
       }
@@ -56,29 +55,29 @@ Blockly.Blocks.aerobot.checkBlocks = function(obj) {
 };
 
 Blockly.Blocks['aerobot_move'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
       .appendField(Blockly.Msg.AEROBOT_MOVE_TITLE)
       .appendField(new Blockly.FieldDropdown([
-      [Blockly.Msg.AEROBOT_FORWARD, "forward"],
-      [Blockly.Msg.AEROBOT_BACKWARD, "backward"],
-      [Blockly.Msg.AEROBOT_STOP, "stop"],
-      [Blockly.Msg.AEROBOT_TURN_LEFT, "cw"],
-      [Blockly.Msg.AEROBOT_TURN_RIGHT, "ccw"]
-    ]), "DIRECTION");
+        [Blockly.Msg.AEROBOT_FORWARD, "forward"],
+        [Blockly.Msg.AEROBOT_BACKWARD, "backward"],
+        [Blockly.Msg.AEROBOT_STOP, "stop"],
+        [Blockly.Msg.AEROBOT_TURN_LEFT, "cw"],
+        [Blockly.Msg.AEROBOT_TURN_RIGHT, "ccw"]
+      ]), "DIRECTION");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.AEROBOT_MOVE_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
@@ -87,26 +86,26 @@ Blockly.Blocks['aerobot_move'] = {
 };
 
 Blockly.Blocks['aerobot_rotate'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
       .appendField(Blockly.Msg.AEROBOT_ROTATE_TITLE)
       .appendField(new Blockly.FieldDropdown([
-      [Blockly.Msg.AEROBOT_ROTATE_LEFT, "cw"],
-      [Blockly.Msg.AEROBOT_ROTATE_RIGHT, "ccw"]
-    ]), "DIRECTION");
+        [Blockly.Msg.AEROBOT_ROTATE_LEFT, "cw"],
+        [Blockly.Msg.AEROBOT_ROTATE_RIGHT, "ccw"]
+      ]), "DIRECTION");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.AEROBOT_ROTATE_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
@@ -115,27 +114,27 @@ Blockly.Blocks['aerobot_rotate'] = {
 };
 
 Blockly.Blocks['aerobot_lightsens'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
       .appendField(Blockly.Msg.AEROBOT_LIGHTSENS_TITLE)
       .appendField(new Blockly.FieldDropdown([
-      [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
-      [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
-      [Blockly.Msg.AEROBOT_LEFT, "LEFT"]
-    ]), "SENS");
+        [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
+        [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
+        [Blockly.Msg.AEROBOT_LEFT, "LEFT"]
+      ]), "SENS");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.AEROBOT_LIGHTSENS_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
@@ -144,27 +143,27 @@ Blockly.Blocks['aerobot_lightsens'] = {
 };
 
 Blockly.Blocks['aerobot_distsens'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
       .appendField(Blockly.Msg.AEROBOT_DISTSENS_TITLE)
       .appendField(new Blockly.FieldDropdown([
-      [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
-      [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
-      [Blockly.Msg.AEROBOT_LEFT, "LEFT"]
-    ]), "SENS");
+        [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
+        [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
+        [Blockly.Msg.AEROBOT_LEFT, "LEFT"]
+      ]), "SENS");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.AEROBOT_LIGHTSENS_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
@@ -173,28 +172,28 @@ Blockly.Blocks['aerobot_distsens'] = {
 };
 
 Blockly.Blocks['aerobot_linesens'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
       .appendField(Blockly.Msg.AEROBOT_LINESENS_TITLE)
       .appendField(new Blockly.FieldDropdown([
-      [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
-      [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
-      [Blockly.Msg.AEROBOT_LEFT, "LEFT"],
-      [Blockly.Msg.AEROBOT_NONE, "NONE"]
-    ]), "SENS");
+        [Blockly.Msg.AEROBOT_CENTER, "CENTER"],
+        [Blockly.Msg.AEROBOT_RIGHT, "RIGHT"],
+        [Blockly.Msg.AEROBOT_LEFT, "LEFT"],
+        [Blockly.Msg.AEROBOT_NONE, "NONE"]
+      ]), "SENS");
     this.setInputsInline(true);
     this.setOutput(true, 'Number');
     this.setTooltip(Blockly.Msg.AEROBOT_LINESENS_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
@@ -203,12 +202,12 @@ Blockly.Blocks['aerobot_linesens'] = {
 };
 
 Blockly.Blocks['aerobot_setled'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.AEROBOT_HELPURL);
-    this.setColour(Blockly.Blocks.aerobot.HUE);
+    this.setColour(Blockly.Msg.AEROBOT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.aerobot.image, 64, 64))
-      .appendField(Blockly.Msg.AEROBOT_SETLED_TITLE)
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Aerobot.image, 64, 64))
+      .appendField(Blockly.Msg.AEROBOT_SETLED_TITLE);
     this.appendDummyInput()
       .setAlign(Blockly.ALIGN_RIGHT)
       .appendField(Blockly.Msg.COLOR)
@@ -217,17 +216,15 @@ Blockly.Blocks['aerobot_setled'] = {
     this.setNextStatement(true, null);
     this.setTooltip(Blockly.Msg.AEROBOT_SETLED_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has been deleted.
       return;
     }
-    if (!Blockly.Blocks.aerobot.checkBlocks(this)) {
+    if (!Blockly.Constants.Aerobot.checkBlocks(this)) {
       this.setWarningText(Blockly.Msg.AEROBOT_WARNING);
     } else {
       this.setWarningText(null);
     }
   }
 };
-
-

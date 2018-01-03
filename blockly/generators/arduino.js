@@ -93,7 +93,6 @@ var profile = {
     i2c_matrix_type: [["8x8","8x8matrix"],["16x8","8x16matrix"],["bi_color8x8","BicolorMatrix"]],
     led_backpack_address: [["0x70","0x70"],["0x71","0x71"],["0x72","0x72"],["0x73","0x73"]],
     blynk_merge_index: [["0","0"],["1","1"],["2","2"]],
-    grove_digital: [["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"]],
     shield_bot_sensor: [["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]],
     interrupt:[["2","0"],["3","1"]]
   },
@@ -124,8 +123,8 @@ Blockly.Arduino.init = function(workspace) {
   }
 
   var defvars = [];
-//  var variables = Blockly.Variables.allVariables(workspace);
-  var variables = Blockly.Variables.allVariablesAndTypes(workspace);
+  var variables = Blockly.Variables.allVariables(workspace);
+  // var variables = Blockly.Variables.allVariablesAndTypes(workspace);
   var datatype = {Number:'int',Long:'long',Float:'float',Byte:'byte',Boolean:'boolean',Char:'char',String:'String',Array:'int',Volatile_Int:'volatile int',Word:'word',Double:'double',Unsigned_Int:'unsigned int',Unsigned_Long:'unsigned long'};
   for (var x = 0; x < variables.length; x++) {
     if(variables[x][1] == ""){

@@ -27,24 +27,26 @@
  * @author gasolin@gmail.com (Fred Lin)
  */
 
-goog.provide('Blockly.Blocks.interrupts');
+goog.provide('Blockly.Constants.Interrupts');
 
 goog.require('Blockly.Blocks');
-
-Blockly.Blocks.interrupts.HUE = 190;
+goog.require('Blockly');
 
 Blockly.Blocks['interrupts_attach'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.INTERRUPTS_ATTACH_HELPURL);
-    this.setColour(190);
+    this.setColour(Blockly.Msg.INTERRUPTS_HUE);
     this.appendDummyInput()
-      .appendField(Blockly.Msg.INTERRUPTS_ATTACH_TITLE);
-    this.appendDummyInput()
+      .appendField(Blockly.Msg.INTERRUPTS_ATTACH_TITLE)
       .appendField(Blockly.Msg.PIN)
-      .appendField(new Blockly.FieldDropdown(profile.default.interrupt), "PIN");
-    this.appendDummyInput()
+      .appendField(new Blockly.FieldDropdown(profile.default.interrupt), "PIN")
       .appendField(Blockly.Msg.MODE)
-      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.LOW, "LOW"],[Blockly.Msg.CHANGE, "CHANGE"],[Blockly.Msg.RISING, "RISING"],[Blockly.Msg.FALLING, "FALLING"]]), "MODE");
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.LOW, "LOW"],
+        [Blockly.Msg.CHANGE, "CHANGE"],
+        [Blockly.Msg.RISING, "RISING"],
+        [Blockly.Msg.FALLING, "FALLING"]
+      ]), "MODE");
     this.appendStatementInput("CONTENT");
     this.setInputsInline(true);
     this.setTooltip(Blockly.Msg.INTERRUPTS_ATTACH_TOOLTIP);
@@ -52,12 +54,11 @@ Blockly.Blocks['interrupts_attach'] = {
 };
 
 Blockly.Blocks['interrupts_detach'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.INTERRUPTS_DETACH_HELPURL);
-    this.setColour(190);
+    this.setColour(Blockly.Msg.INTERRUPTS_HUE);
     this.appendDummyInput()
-      .appendField(Blockly.Msg.INTERRUPTS_DETACH_TITLE);
-    this.appendDummyInput()
+      .appendField(Blockly.Msg.INTERRUPTS_DETACH_TITLE)
       .appendField(new Blockly.FieldDropdown(profile.default.interrupt), "PIN");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
@@ -67,9 +68,9 @@ Blockly.Blocks['interrupts_detach'] = {
 };
 
 Blockly.Blocks['interrupts'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.INTERRUPTS_HELPURL);
-    this.setColour(190);
+    this.setColour(Blockly.Msg.INTERRUPTS_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.INTERRUPTS_TITLE);
     this.setPreviousStatement(true, null);
@@ -79,9 +80,9 @@ Blockly.Blocks['interrupts'] = {
 };
 
 Blockly.Blocks['interrupts_no'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.INTERRUPTS_NO_HELPURL);
-    this.setColour(190);
+    this.setColour(Blockly.Msg.INTERRUPTS_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.INTERRUPTS_NO_TITLE);
     this.setPreviousStatement(true, null);
@@ -89,4 +90,3 @@ Blockly.Blocks['interrupts_no'] = {
     this.setTooltip(Blockly.Msg.INTERRUPTS_NO_TOOLTIP);
   }
 };
-

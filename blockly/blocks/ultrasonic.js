@@ -24,20 +24,19 @@
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.ultrasonic');
+goog.provide('Blockly.Constants.Ultrasonic');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.ultrasonic.HUE = 215;
-
-Blockly.Blocks.ultrasonic.image = filepath.media+'/ultrasonic.jpg';
+Blockly.Constants.Ultrasonic.image = './media/ultrasonic.jpg';
 
 Blockly.Blocks['ultrasonic_setting'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ULTRASONIC_SETTING_HELPURL);
-    this.setColour(Blockly.Blocks.ultrasonic.HUE);
+    this.setColour(Blockly.Msg.ULTRASONIC_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.ultrasonic.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Ultrasonic.image, 64, 64))
       .appendField(Blockly.Msg.ULTRASONIC_SETTING_TITLE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.ULTRASONIC_SETTING_TRIG);
@@ -61,9 +60,9 @@ Blockly.Blocks['ultrasonic_setting'] = {
 Blockly.Blocks['ultrasonic_maxrange'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ULTRASONIC_MAXRANGE_HELPURL);
-    this.setColour(Blockly.Blocks.ultrasonic.HUE);
+    this.setColour(Blockly.Msg.ULTRASONIC_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.ultrasonic.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Ultrasonic.image, 64, 64))
       .appendField(Blockly.Msg.ULTRASONIC_MAXRANGE_TITLE)
       .appendField(new Blockly.FieldTextInput("20"),"MAXRANGE")
       .appendField(new Blockly.FieldDropdown([["cm", "CM"], ["inch", "INCH"]]), "UNIT");
@@ -77,9 +76,9 @@ Blockly.Blocks['ultrasonic_maxrange'] = {
 Blockly.Blocks['ultrasonic_distance'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.ULTRASONIC_DISTANCE_HELPURL);
-    this.setColour(Blockly.Blocks.ultrasonic.HUE);
+    this.setColour(Blockly.Msg.ULTRASONIC_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.ultrasonic.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Ultrasonic.image, 64, 64))
       .appendField(Blockly.Msg.ULTRASONIC_MAXRANGE_TITLE);
     this.appendDummyInput()
       .appendField(new Blockly.FieldDropdown([["cm", "CM"], ["inch", "INCH"]]), "UNIT");

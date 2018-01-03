@@ -19,25 +19,23 @@
  */
 
 /**
- * @fileoverview List blocks for Blockly.
- * @author fraser@google.com (Neil Fraser)
+ * @author ok.okada.hiroyuki@google.com
  */
 'use strict';
 
-goog.provide('Blockly.Blocks.dht');
+goog.provide('Blockly.Constants.Dht');
 
 goog.require('Blockly.Blocks');
+goog.require('Blockly');
 
-Blockly.Blocks.dht.HUE = 215;
-
-Blockly.Blocks.dht.image = filepath.media+'/dht11.jpg';
+Blockly.Constants.Dht.image = './media/dht11.jpg';
 
 Blockly.Blocks['dht_read'] = {
-  init: function() {
+  init: function () {
     this.setHelpUrl(Blockly.Msg.DHT_HELPURL);
-    this.setColour(Blockly.Blocks.dht.HUE);
+    this.setColour(Blockly.Msg.DHT_HUE);
     this.appendDummyInput()
-      .appendField(new Blockly.FieldImage(Blockly.Blocks.dht.image, 64, 64))
+      .appendField(new Blockly.FieldImage(Blockly.Constants.Dht.image, 64, 64))
       .appendField(Blockly.Msg.DHT_READ_SENSOR)
       .appendField(new Blockly.FieldDropdown(profile.default.dht), "SENSOR");
     this.appendDummyInput()
@@ -45,12 +43,16 @@ Blockly.Blocks['dht_read'] = {
       .appendField(new Blockly.FieldDropdown(profile.default.digital), "PIN");
     this.appendDummyInput()
       .appendField(Blockly.Msg.DHT_READ_TYPE)
-      .appendField(new Blockly.FieldDropdown([[Blockly.Msg.DHT_READ_H,"h"],[Blockly.Msg.DHT_READ_C,"C"],[Blockly.Msg.DHT_READ_F,"F"]]), "TYPE");
+      .appendField(new Blockly.FieldDropdown([
+        [Blockly.Msg.DHT_READ_H, "h"],
+        [Blockly.Msg.DHT_READ_C, "C"],
+        [Blockly.Msg.DHT_READ_F, "F"]
+      ]), "TYPE");
     this.setInputsInline(true);
     this.setOutput(true, 'Number');
     this.setTooltip(Blockly.Msg.DHT_READ_TOOLTIP);
   },
-  onchange: function() {
+  onchange: function () {
     if (!this.workspace) {
       // Block has en deleted.
       return;

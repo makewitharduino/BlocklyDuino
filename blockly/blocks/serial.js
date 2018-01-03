@@ -24,18 +24,15 @@
  */
 'use strict';
 
-//To support syntax defined in http://arduino.cc/en/Reference/HomePage
-
-goog.provide('Blockly.Blocks.serial');
+goog.provide('Blockly.Constants.Serial');
 
 goog.require('Blockly.Blocks');
-
-Blockly.Blocks.serial.HUE = 200;
+goog.require('Blockly');
 
 Blockly.Blocks['serial_print'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.SERIAL_PRINT_HELPURL);
-    this.setColour(Blockly.Blocks.serial.HUE);
+    this.setColour(Blockly.Msg.SERIAL_HUE);
     this.appendValueInput("CONTENT")
       .setCheck(["Number", "String"])
       .appendField(Blockly.Msg.SERIAL_PRINT_APPENDTEXT);
@@ -48,7 +45,7 @@ Blockly.Blocks['serial_print'] = {
 Blockly.Blocks['serial_read'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.SERIAL_READ_HELPURL);
-    this.setColour(Blockly.Blocks.serial.HUE);
+    this.setColour(Blockly.Msg.SERIAL_HUE);
     this.appendDummyInput()
     .appendField(Blockly.Msg.SERIAL_READ_APPENDTEXT);
     this.setOutput(true,["Number","String"]);
@@ -59,7 +56,7 @@ Blockly.Blocks['serial_read'] = {
 Blockly.Blocks['serial_byte_number'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.SERIAL_READ_HELPURL);
-    this.setColour(Blockly.Blocks.serial.HUE);
+    this.setColour(Blockly.Msg.SERIAL_HUE);
     this.appendDummyInput()
       .appendField(Blockly.Msg.SERIAL_BYTE_NUMBER_TEXT1)
       .appendField(new Blockly.FieldDropdown([["0","48"],["1", "49"], ["2", "50"], ["3", "51"], ["4", "52"], ["5", "53"], ["6", "54"], ["7", "55"], ["8", "56"], ["9", "57"]]), "NUM")
@@ -73,7 +70,7 @@ Blockly.Blocks['serial_byte_number'] = {
 Blockly.Blocks['serial_available'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.SERIAL_AVAILABLE_HELPURL);
-    this.setColour(Blockly.Blocks.serial.HUE);
+    this.setColour(Blockly.Msg.SERIAL_HUE);
     this.appendDummyInput()
     .appendField(Blockly.Msg.SERIAL_AVAILABLE_APPENDTEXT);
     this.setOutput(true, "Number");
@@ -84,7 +81,7 @@ Blockly.Blocks['serial_available'] = {
 Blockly.Blocks['serial_println'] = {
   init: function() {
     this.setHelpUrl(Blockly.Msg.SERIAL_PRINTLN_HELPURL);
-    this.setColour(Blockly.Blocks.serial.HUE);
+    this.setColour(Blockly.Msg.SERIAL_HUE);
     this.appendValueInput("CONTENT")
       .setCheck(["Number", "String"])
     . appendField(Blockly.Msg.SERIAL_PRINTLN_APPENDTEXT);
