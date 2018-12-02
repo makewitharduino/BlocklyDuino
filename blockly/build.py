@@ -206,7 +206,8 @@ class Gen_compressed(threading.Thread):
       self.gen_accessible()
 
     if ('core' in self.bundles or 'accessible' in self.bundles):
-      self.gen_blocks()
+      self.gen_blocks("arduino")
+      self.gen_blocks("common")
 
     if ('generators' in self.bundles):
       self.gen_generator("arduino")
@@ -293,8 +294,14 @@ class Gen_compressed(threading.Thread):
 
     self.do_compile(params, target_filename, filenames, "")
 
-  def gen_blocks(self):
-    target_filename = "blocks_compressed.js"
+  def gen_blocks(self, block_type):
+    if block_type == 'common':
+      target_filename = "blocks_compressed.js"
+      filenames = glob.glob(os.path.join("blocks_common", "*.js"))
+    elif block_type == 'arduino':
+      target_filename = "blocks_compressed_arduino.js"
+      filenames = glob.glob(os.path.join("blocks_arduino", "*.js"))
+
     # Define the parameters for the POST request.
     params = [
         ("compilation_level", "SIMPLE_OPTIMIZATIONS"),
@@ -308,7 +315,6 @@ class Gen_compressed(threading.Thread):
     # Read in all the source files.
     # Add Blockly.Blocks to be compatible with the compiler.
     params.append(("js_code", "goog.provide('Blockly');goog.provide('Blockly.Blocks');"))
-    filenames = glob.glob(os.path.join("blocks", "*.js"))
     filenames.sort()  # Deterministic build.
     for filename in filenames:
       f = open(filename)
